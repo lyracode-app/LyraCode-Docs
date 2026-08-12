@@ -9,7 +9,19 @@ export default defineConfig({
   title: 'LyraCode Docs',
   description: 'Lyra Code 文档中心',
   lang: 'zh-CN',
+  lastUpdated: true,
   themeConfig: {
+    lastUpdated: {
+      text: '最后更新时间',
+      formatOptions: {
+        dateStyle: 'full',
+        timeStyle: 'medium'
+      }
+    },
+    editLink: {
+      pattern: 'https://github.com/lyracode-app/LyraCode-Docs/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页'
+    },
     nav: [
       { text: '首页', link: '/' },
       { text: '指南', link: '/guide/getting-started' }
