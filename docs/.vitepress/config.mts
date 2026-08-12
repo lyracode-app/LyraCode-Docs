@@ -1,6 +1,11 @@
 import { defineConfig } from 'vitepress'
 
+const base = process.env.VITEPRESS_BASE || '/'
+
 export default defineConfig({
+  // 部署到 GitHub Pages 时使用子路径 /LyraCode-Docs/
+  // 可通过环境变量 VITEPRESS_BASE 覆盖
+  base,
   title: 'LyraCode Docs',
   description: 'Lyra Code 文档中心',
   lang: 'zh-CN',

@@ -37,4 +37,4 @@ docs/
    └─ getting-started.md  # 本页面
 ```
 
-然后在 [`docs/.vitepress/config.mts`](/docs/.vitepress/config.mts) 中的 `sidebar` 配置里添加对应链接即可。
+然后在项目根目录的 `docs/.vitepress/config.mts` 中的 `sidebar` 配置里添加对应链接即可。
