@@ -2,45 +2,31 @@
 layout: home
 
 hero:
-  name: "Lyra Code"
-  text: "Android 本地 AI Agent 使用文档"
-  tagline: "面向 Android 的本地 AI Agent 应用 · 详细使用指南（高级篇）"
+  name: Lyra Code
+  text: 面向 Android 的本地 AI Agent
+  tagline: 轻量 · 快速 · 全应用 Kotlin 编写，Jetpack Compose + MD3 设计，贴近原生 Android 体验
   image:
-    src: /img/logo-256.png
+    src: /logo.png
     alt: Lyra Code
   actions:
     - theme: brand
       text: 开始阅读
       link: /guide/01-简介与安装
     - theme: alt
-      text: GitHub 仓库
-      link: https://github.com/lyracode-app/Lyra-Code
+      text: 查看指南
+      link: /guide/quick-start
 
 features:
-  - icon:
-      src: /img/icons/cellphone.svg
-      alt: 本地优先
-    title: 本地优先
-    details: 模型 Key、对话、文件与凭据全部保存在本机，不经过第三方中转
-  - icon:
-      src: /img/icons/robot.svg
-      alt: Agent 化
-    title: Agent 化
-    details: AI 不止回答，还能读文件、改代码、执行命令、操作远程服务器，全程可审批可审计
-  - icon:
-      src: /img/icons/plug.svg
-      alt: 远程集成
-    title: 远程集成
-    details: SSH、邮件（IMAP/SMTP）、WebDAV、FTP/FTPS/SFTP、MCP 客户端与服务端
-  - icon:
-      src: /img/icons/puzzle.svg
-      alt: 可扩展
-    title: 可扩展
-    details: Skills 能力包、定时任务、内置微型服务器与离线用量统计
+  - title: 多模型多接口
+    details: 支持 OpenAI Chat Completions、Anthropic Messages API、Gemini GenerateContent API 及兼容 API 服务商，可随时切换。
+  - title: 本地 Agent 能力
+    details: 文件操作、代码编辑、命令执行、联网搜索、MCP 客户端/服务端、SSH、WebDAV、FTP/SFTP 与微型服务器。
+  - title: 轻量原生体验
+    details: 全应用 Kotlin 编写，使用 Jetpack Compose 和 MD3 UI，内存占用小，响应迅速，贴近原生 Android 样式。
+  - title: 完全开源免费
+    details: 项目在 GitHub 与 Gitee 双平台开源，切勿相信付费提供安装包的任何渠道。
+  - title: 双栏文件管理器
+    details: 独立双栏文件管理器，集成 Sora Editor 代码编辑器，支持语法高亮、行号、文件内搜索与 AI 对话侧栏。
+  - title: 数据与隐私
+    details: API Key 与密码均加密本地保存，不会上传服务器；支持本地/WebDAV 备份与安全导出。
 ---
-
-## 关于本手册
-
-本手册基于 Lyra Code 官方 README 与内置 Agent 工具契约编写，覆盖安装配置、Agent 工具体系、文件与代码编辑、命令执行、远程集成、微型服务器、Skills、记忆与子代理、定时任务、备份迁移、用量统计、安全实践与常见问题排查。
-
-界面细节以实际版本为准，建议结合官方 [README_zh-CN.md](https://github.com/lyracode-app/Lyra-Code/blob/main/README_zh-CN.md) 阅读。

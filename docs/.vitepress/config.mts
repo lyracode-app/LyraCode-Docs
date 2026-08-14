@@ -1,12 +1,11 @@
 import { defineConfig } from 'vitepress'
-
-const base = process.env.VITEPRESS_BASE || '/'
+import { transformPageData } from './last-updated'
 
 export default defineConfig({
-  // 部署到 GitHub Pages 时使用子路径 /LyraCode-Docs/（CI 通过 VITEPRESS_BASE 注入）
-  base,
-  title: 'Lyra Code 使用文档',
-  description: '面向 Android 的本地 AI Agent 应用 · 详细使用指南',
+  title: 'Lyra Code',
+  transformPageData,
+  // 使用文件系统最后修改时间兜底各页"最后更新于"
+  description: '面向 Android 的本地 AI Agent 应用文档',
   lang: 'zh-CN',
   lastUpdated: true,
   cleanUrls: false,
@@ -15,103 +14,75 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#5b7cfa' }]
   ],
   themeConfig: {
-    logo: '/img/logo-256.png',
-    siteTitle: 'Lyra Code 使用文档',
+    logo: '/logo.png',
     nav: [
-      { text: '指南', link: '/guide/01-简介与安装' },
-      { text: '更新日志', link: '/changelog' }
+      { text: '首页', link: '/' },
+      { text: '指南', link: '/guide/' },
+      { text: '下载', link: '/download' },
+      { text: '构建', link: '/build' },
+      { text: '安全', link: '/security' },
+      {
+        text: '资源',
+        items: [
+          { text: 'GitHub', link: 'https://github.com/lyracode-app/Lyra-Code' },
+          { text: 'Gitee', link: 'https://gitee.com/yukisoffd/lyra-code' }
+        ]
+      }
     ],
     sidebar: [
       {
-        text: '使用指南',
+        text: '指南',
         items: [
-          { text: '简介与安装', link: '/guide/01-简介与安装' },
-          { text: '界面与模型', link: '/guide/02-界面与模型' },
-          { text: 'Agent 工具', link: '/guide/03-Agent工具' },
-          { text: '文件操作与命令执行', link: '/guide/04-文件与命令' },
-          { text: '远程集成', link: '/guide/05-远程集成' },
-          { text: '微型服务器与 Skills', link: '/guide/06-服务器与Skills' },
-          { text: '记忆、定时任务与备份', link: '/guide/07-记忆任务与备份' },
-          { text: '统计、诊断与多模态', link: '/guide/08-统计与多模态' },
-          { text: '安全与排障', link: '/guide/09-安全与排障' },
-          { text: '高级工作流与附录', link: '/guide/10-高级工作流与附录' }
+          { text: '简介', link: '/guide/' },
+          { text: '快速开始', link: '/guide/getting-started' },
+          { text: '快速上手', link: '/guide/quick-start' },
+          { text: '模型配置', link: '/guide/model-config' },
+          { text: '对话', link: '/guide/chat' },
+          { text: '对话管理', link: '/guide/chat-management' },
+          { text: '个性化', link: '/guide/personalization' },
+          { text: '通用功能', link: '/guide/general' },
+          { text: '高级功能', link: '/guide/advanced' }
         ]
       },
       {
-        text: '工具参考',
+        text: '项目',
         items: [
-          { text: '文件与目录', link: '/reference/files' },
-          { text: '命令执行', link: '/reference/commands' },
-          { text: '下载与联网', link: '/reference/network' },
-          { text: '远程集成', link: '/reference/remote' },
-          { text: '系统与运维', link: '/reference/system' }
-        ]
-      },
-      {
-        text: '其他',
-        items: [
-          { text: '更新日志', link: '/changelog' }
+          { text: '下载', link: '/download' },
+          { text: '构建', link: '/build' },
+          { text: '安全说明', link: '/security' }
         ]
       }
     ],
-    outline: {
-      level: [2, 3],
-      label: '本页目录'
-    },
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/lyracode-app/Lyra-Code' }
+    ],
     footer: {
-      message: 'AGPLv3-or-later',
-      copyright: 'Lyra Code 使用文档'
-    },
-    search: {
-      provider: 'local',
-      options: {
-        miniSearch: {
-          tokenize: (text: string) => {
-            const words = text.split(/[\s，。；：！？、,.!?;:()（）"'“”‘’\/\\\-_]+/u).filter(Boolean)
-            const chars = [...text].filter((c) => /[\u4e00-\u9fff]/.test(c))
-            return [...words, ...chars]
-          }
-        },
-        locales: {
-          zh: {
-            translations: {
-              button: { buttonText: '搜索文档', buttonAriaLabel: '搜索文档' },
-              modal: {
-                displayDetails: '显示详情',
-                resetButtonTitle: '清除',
-                backButtonTitle: '返回',
-                noResultsText: '未找到相关结果',
-                footer: {
-                  selectText: '选择',
-                  navigateText: '切换',
-                  closeText: '关闭'
-                }
-              }
-            }
-          }
-        }
-      }
+      copyright: 'Copyright © 2026 Lyra Code'
     },
     docFooter: {
       prev: '上一页',
       next: '下一页'
     },
+    editLink: {
+      pattern: 'https://github.com/lyracode-app/LyraCode-Docs/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页'
+    },
+    outline: {
+      label: '本页目录',
+      level: [2, 3]
+    },
     lastUpdated: {
-      text: '最后更新时间',
+      text: '最后更新于',
       formatOptions: {
         dateStyle: 'medium',
         timeStyle: 'short'
       }
     },
-    editLink: {
-      pattern: 'https://github.com/lyracode-app/LyraCode-Docs/edit/main/docs/:path',
-      text: '在 GitHub 上编辑此页'
+    search: {
+      provider: 'local'
     },
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/lyracode-app/LyraCode-Docs' }
-    ],
-    darkModeSwitchLabel: '主题',
+    darkModeSwitchLabel: '外观',
     sidebarMenuLabel: '菜单',
-    returnToTopLabel: '回到顶部'
+    returnToTopLabel: '返回顶部'
   }
 })
