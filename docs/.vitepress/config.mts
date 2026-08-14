@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { transformPageData } from './last-updated'
 
 const base = process.env.VITEPRESS_BASE || '/'
 
@@ -69,6 +70,8 @@ const enSidebar = [
 export default defineConfig({
   // 部署到 GitHub Pages 时使用子路径 /LyraCode-Docs/（CI 通过 VITEPRESS_BASE 注入）
   base,
+  transformPageData,
+  // 使用文件系统最后修改时间兜底各页"最后更新于"
   appearance: 'light',
   title: 'Lyra Code 使用文档',
   description: '面向 Android 的本地 AI Agent 应用 · 详细使用指南',

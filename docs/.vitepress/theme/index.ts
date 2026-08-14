@@ -1,6 +1,7 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
 import { h } from 'vue'
+import DownloadSection from './components/DownloadSection.vue'
 import './custom.css'
 import ParticlesBg from './components/ParticlesBg.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
@@ -16,6 +17,9 @@ const theme: Theme = {
       'layout-top': () => [h(ScrollProgress), h(GlobalStars), h(RevealOnScroll)],
       'doc-before': () => h(PageTitle)
     })
+  },
+  enhanceApp({ app }) {
+    app.component('DownloadSection', DownloadSection)
   }
 }
 
