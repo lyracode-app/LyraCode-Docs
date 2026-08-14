@@ -8,6 +8,11 @@ export default defineConfig({
   description: '面向 Android 的本地 AI Agent 应用文档',
   lang: 'zh-CN',
   lastUpdated: true,
+  cleanUrls: false,
+  head: [
+    ['link', { rel: 'icon', type: 'image/png', href: '/img/logo-256.png' }],
+    ['meta', { name: 'theme-color', content: '#5b7cfa' }]
+  ],
   themeConfig: {
     logo: '/logo.png',
     nav: [
