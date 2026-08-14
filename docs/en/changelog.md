@@ -2,6 +2,14 @@
 title: Changelog
 ---
 
+## 2026-08-14 · Beginner-friendly guide rewrite
+
+- All 10 Chinese guides rewritten in a step-by-step, beginner-first style: concept primers, detailed walkthroughs, common mistakes and FAQs;
+- Each chapter now has an intro, expected reading time, beginner tips, pitfalls and an FAQ section;
+- Chapter 1 adds a concept primer (AI models / API Key / Agent / Workspace / Termux, etc.);
+- Chapter 10 adds a learning path and a full glossary;
+- Facts remain based on the official README (Lyra Code 3.6.0) and built-in tool contracts.
+
 ## 2026-08-14 · Language switcher (简体中文 / English)
 
 - English version merged into the docs site: a "语言 / Language" navbar dropdown switches between Simplified Chinese and English from any page;

@@ -2,87 +2,155 @@
 title: Agent 工具
 ---
 
-## 5. Agent 工具体系
+# 第 3 章：Agent 工具——AI 有哪些"手"可以帮你干活
 
-
-Agent 工具是 Lyra Code 的灵魂。所有工具都以「可审批、可禁用、可审计」的方式暴露给 AI。
-
-### 5.1 工具分类
-
-| 类别 | 代表工具 | 说明 |
-| --- | --- | --- |
-| 文件与目录 | list_directory / search_files / get_file_info / create_folder / rename_move / delete | 工作区内的原生操作 |
-| 文件读写 | read_file / read_file_lines / write_file / edit_file / append_file | 支持精确行内编辑，自动生成 .bak |
-| 全局存储 | global_* 系列 | Android 共享存储（/storage/emulated/0），工作区之外 |
-| 下载 | download_file | 原生 HTTP/HTTPS，支持重定向、请求头、SHA-256 校验 |
-| 命令 | run_command | Termux Shell，非交互命令 |
-| 系统 | execute_shell_command / execute_root_command | 需 Shizuku / Root，另行授权 |
-| 规划 | set_todo_list / update_todo_item | 多步任务的进度管理 |
-| 联网 | web_search / read_web_page / mark_web_sources | 搜索、读页、来源标注 |
-| 远程 | ssh_exec / list_emails / webdav_* / file_transfer_* | 各类远程服务器 |
-| 定时 | manage_scheduled_tasks | 一次性 / 每日 / 每周 / 每月任务 |
-| 备份 | export_backup / import_backup | 本地或 WebDAV |
-| 其他 | get_current_time / get_current_location / get_device_hardware_info / list_installed_apps | 时间、位置、设备信息 |
-
-### 5.2 工作区（Workspace）与全局存储的区别
-
-```text
-工作区：原生文件工具（read_file / edit_file 等）只能在所选工作区内操作，路径为相对路径。
-全局：global_* 工具可访问整个 /storage/emulated/0（Android/data、Android/obb、/data 除外）。
-```
-
-- 默认工作区路径示例：`/storage/emulated/0/Lyra`，工具内使用相对路径如 `src/main.kt`；
-- 不要向原生文件工具传 Termux 私有路径（如 `/data/data/com.termux`），那会被拒绝；
-- `Download` 和 `Downloads` 均映射到 `/storage/emulated/0/Download`。
-
-### 5.3 文件搜索
-
-| 场景 | 工具 |
-| --- | --- |
-| 按文件名/路径片段找工作区文件 | search_files（query 只放文件名或片段，path 为 "." 或子目录） |
-| 工作区外找文件 | 先 search_files，返回 SEARCH_EMPTY 再用 global_search_files 一次 |
-| 按文件内容搜索 | 使用命令 `rg`（首选），缺失时退化为 `grep -r` |
-| 远程存储找文件 | webdav_search / file_transfer_search |
-
-::: warning 注意
-`search_files` 只匹配文件名/路径，**不搜索文件内容**。
-:::
-
-### 5.4 原生下载
-
-```text
-download_file
-  - url：HTTP/HTTPS 地址
-  - path：目标路径（工作区相对路径，或全局路径）
-  - headers：如 "Authorization: Bearer xxx"
-  - sha256：可选完整性校验，不匹配则失败
-```
-
-优先使用 `download_file` 而不是 curl/wget——它有进度、重定向处理和校验能力。
-
-### 5.5 TODO 规划
-
-对于多步骤任务，AI 会创建 TODO 列表（3–7 项，状态为 pending / running / completed / blocked）：
-
-- 简单对话、单次编辑、单一命令**不需要** TODO；
-- 涉及多文件、多阶段、风险操作的任务必须有 TODO；
-- 你可以在任意时刻要求 AI 展示或调整 TODO，强制它分步执行。
-
-### 5.6 联网搜索与来源管理
-
-- `web_search` 返回候选标题/URL/摘要，摘要只是线索；
-- `read_web_page` 打开页面读取正文，**只信任真正读到的内容**；
-- `mark_web_sources` 记录实际使用的来源，回答会附带链接；
-- 网站黑名单：在设置中添加后，AI 无法打开被屏蔽域名（精确匹配，支持 `*.x.com` 通配符）。
-
-### 5.7 审批与审计
-
-每个可能改变状态的工具调用（写文件、执行命令、发邮件、远程操作）都会经过你的确认。
-
-- 工具结果以结构化 JSON 返回（schema / ok / content / error / file_changes）；
-- `ok=true` 只表示调用完成，命令是否成功要看 exit_code 和输出；
-- 文件修改会附带 diff 供你审查；
-- 所有工具均可在「Agent 工具页」单独禁用。
+> 上一章我们接好了模型。这一章回答一个关键问题：**AI 除了打字，还能实际动手做什么？**
+>
+> 答案是：通过一系列**工具（Tools）**。本章把每个工具组都讲明白，包括它们的边界、风险和你需要注意的地方。
+>
+> 预计阅读 20 分钟。
 
 ---
 
+## 5. Agent 工具体系
+
+### 5.0 什么是「工具」？——用大白话理解
+
+你可以把 AI 想象成一个**只会动嘴的助手**。它自己不能碰你的手机，但 App 给了它一双手套：
+
+> 每一只"手套"就是一个工具。AI 想用哪只手套，就向你报告"我要用 XX 工具做 XX 事"，**你点头它才动手**。
+
+所以：
+
+- 工具越多 → AI 越能干；
+- 每个工具都有明确权限边界 → AI 不能越界乱来；
+- 所有工具都能在「Agent 工具页」单独开关 → 你不信任的可以禁用。
+
+### 5.1 工具分类一览（带通俗解释）
+
+| 类别 | 代表工具 | 它是干嘛的（大白话） |
+| --- | --- | --- |
+| 文件与目录 | list_directory / search_files / get_file_info / create_folder / rename_move / delete | 看文件夹、找文件、建文件夹、改名、删除 |
+| 文件读写 | read_file / read_file_lines / write_file / edit_file / append_file | 读文件、新建文件、精确修改、追加内容 |
+| 全局存储 | global_* 系列 | 操作工作区**之外**的手机存储（照片、下载目录等） |
+| 下载 | download_file | 从网上下载文件到手机 |
+| 命令 | run_command | 在 Termux 里执行命令（装软件、跑脚本） |
+| 系统 | execute_shell_command / execute_root_command | 系统级操作（需要 Shizuku / Root） |
+| 规划 | set_todo_list / update_todo_item | 给多步任务建清单、更新进度 |
+| 联网 | web_search / read_web_page / mark_web_sources | 搜索、打开网页、记录引用来源 |
+| 远程 | ssh_exec / list_emails / webdav_* / file_transfer_* | 连接服务器、邮箱、网盘、FTP |
+| 定时 | manage_scheduled_tasks | 设置定时任务 |
+| 备份 | export_backup / import_backup | 备份/恢复你的数据 |
+| 其他 | get_current_time / get_current_location / get_device_hardware_info / list_installed_apps | 查时间、位置、手机硬件、已装应用 |
+
+### 5.2 工作区 vs 全局存储（最容易混的概念）
+
+```text
+┌─────────────────────────────────────────────┐
+│  工作区（Workspace）                         │
+│  /storage/emulated/0/Lyra                   │
+│  AI 的"常规手"只能在这个文件夹里活动          │
+│  路径写法：src/main.kt（相对路径）            │
+└─────────────────────────────────────────────┘
+        ↑ AI 默认在这里干活
+
+┌─────────────────────────────────────────────┐
+│  全局存储（Global）                          │
+│  /storage/emulated/0（整个手机存储）          │
+│  需要专门的 global_* 工具才能碰               │
+│  用途：下载文件夹、相册、工作区外的文件        │
+└─────────────────────────────────────────────┘
+```
+
+- 工作区默认是 `/storage/emulated/0/Lyra`，AI 用 `read_file`、`edit_file` 等工具时**只能**操作这个文件夹；
+- 想碰工作区外面的文件（比如 `Download` 文件夹），AI 要用 `global_*` 系列工具，同样需要你批准；
+- **不要**把 Termux 的私有目录（如 `/data/data/com.termux`）传给文件工具，会被拒绝；
+- `Download` 和 `Downloads` 都指向 `/storage/emulated/0/Download`。
+
+::: tip 为什么这样设计？
+为了安全。你不可能让 AI 随便删你手机里任何文件——限制在工作区内，就算 AI 出错，损失也可控。
+:::
+
+### 5.3 找文件：用哪个工具？
+
+| 你想干嘛 | 用哪个 | 示例 |
+| --- | --- | --- |
+| 按**文件名**找工作区里的文件 | search_files | 找 `README.md`：query=`README`，path=`.` |
+| 找**文件名**但不确定在哪 | 先 search_files，找不到再用 global_search_files | 找 `photo_2024` |
+| 按**文件内容**搜索 | 命令 rg（或 grep） | 「帮我搜项目里所有 TODO」 |
+| 找**远程服务器**上的文件 | webdav_search / file_transfer_search | 「网盘里有备份文件吗」 |
+
+::: warning 重点
+`search_files` **只按文件名/路径找，不搜索文件内容**。想搜内容必须用命令（`rg`）。这是新手常犯的错误——明明文件里有关键词却搜不到，换个方式就好了。
+:::
+
+### 5.4 下载文件：用 download_file
+
+AI 下载文件走的是**内置下载器**，比命令行 curl 更可靠（有进度、能跟随跳转、能校验）：
+
+```text
+download_file
+  - url：文件网址（http/https）
+  - path：保存到哪（工作区相对路径，或全局路径）
+  - headers：可选，比如需要登录的接口填 Authorization
+  - sha256：可选，填了会校验文件完整性，不一致就失败
+```
+
+**你只需要说人话**，比如：
+
+> 帮我把这张图片下载到工作区的 images 文件夹里：https://example.com/photo.png
+
+AI 会自己调用工具，弹窗等你确认后开始下载。
+
+### 5.5 TODO 规划：AI 的"任务清单"
+
+当任务比较复杂（多个步骤、多个文件、有风险）时，AI 会主动创建一个 **TODO 清单**，让你看到它的计划：
+
+```text
+□ 1. 读取项目结构            → pending（待开始）
+□ 2. 修改 main.py            → running（进行中）
+□ 3. 跑测试验证              → pending
+□ 4. 汇报结果                → pending
+```
+
+- 简单的事（聊个天、读个文件）**不需要** TODO；
+- 复杂的事（改代码、写文档、远程操作）**必须有** TODO；
+- 你可以随时说「展示你的 TODO」「跳过某一步」「先做第 2 步」来指挥它。
+
+### 5.6 联网搜索与来源管理
+
+AI 查资料遵循一套流程：
+
+1. **web_search**：搜索，得到候选结果（标题+链接+摘要）。⚠️ 摘要只是线索，不是结论；
+2. **read_web_page**：打开真正可信的页面，读正文——**只有读到的才算数**；
+3. **mark_web_sources**：记录实际用到的来源，回答时附上链接，方便你查证。
+
+你还可以在设置里配置**联网搜索黑名单**：把不想让 AI 打开的网站域名加进去（如 `example.com`），AI 就打不开了；支持 `*.x.com` 通配符（想全拦一个站，`x.com` 和 `*.x.com` 都加上）。
+
+### 5.7 审批与审计：每次操作都看得见
+
+**这是 Lyra Code 与普通 AI 最大的区别，也是你最该信任它的地方：**
+
+- **改状态的操作都要批准**：写文件、执行命令、发邮件、远程操作……都会弹确认框；
+- **工具结果结构化**：AI 每次操作会返回一个结果卡片，包含：这次调用了什么工具、成功没有（ok）、返回内容、错误信息、改了什么文件；
+- **⚠️ 注意**：`ok=true` 只代表"工具执行完了"，**不代表命令成功**。比如 AI 跑了 `git push`，ok 是 true，但实际可能推送失败——要看后面的 exit_code 和输出；
+- **改文件带 diff**：AI 修改文件后，会展示改动对比（哪些行新增、哪些行删除），你逐行审查；
+- **随时可禁用**：在「Agent 工具页」可以把某个工具关掉，AI 立刻用不了。
+
+### 5.8 新手 FAQ
+
+**Q：AI 能碰我的微信/QQ 聊天记录吗？**
+A：不能。AI 的工具只能访问工作区、显式授权的存储路径和配置过的远程账号。聊天记录这类应用数据在 `Android/data` 下，属于被保护区域。
+
+**Q：我不在的时候 AI 会偷偷干活吗？**
+A：不会。需要审批的操作必须你点确认。AI 不会（也不能）绕过审批。
+
+**Q：所有工具都要开吗？**
+A：默认全开即可。如果你特别在意某一类（比如不想让 AI 用 Root 工具），在工具页关掉它。
+
+**Q：AI 说"我没有这个工具"？**
+A：可能被你在工具页禁用了，或者需要额外配置（比如 SSH 要先添加账号）。告诉它你的需求，它会说明缺什么。
+
+---
+
+*本章完 · 下一章：文件操作与命令执行——让 AI 帮你改文件、跑命令*
