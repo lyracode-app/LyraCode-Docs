@@ -1,18 +1,29 @@
 <template>
-  <canvas ref="canvas" class="global-stars" aria-hidden="true" />
+  <canvas v-if="isHome" ref="canvas" class="global-stars" aria-hidden="true" />
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useData } from 'vitepress'
+
+// 动态星空只出现在首页；阅读页保持安静
+const { page } = useData()
+const isHome = computed(() => {
+  const p = page.value.relativePath
+  return !p || p === 'index.md'
+})
 
 const canvas = ref<HTMLCanvasElement | null>()
 let raf = 0
+let running = false
 
-onMounted(() => {
+const start = async () => {
+  await nextTick()
   const c = canvas.value
-  if (!c) return
+  if (!c || running) return
   const ctx = c.getContext('2d')
   if (!ctx) return
+  running = true
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
   let w = window.innerWidth
@@ -39,7 +50,6 @@ onMounted(() => {
 
   const tick = () => {
     ctx.clearRect(0, 0, w, h)
-    // 星云连线：距离近的粒子连成线
     for (let i = 0; i < stars.length; i++) {
       for (let j = i + 1; j < stars.length; j++) {
         const dx = stars[i].x - stars[j].x
@@ -78,7 +88,25 @@ onMounted(() => {
   onBeforeUnmount(() => {
     cancelAnimationFrame(raf)
     window.removeEventListener('resize', resize)
+    running = false
   })
+}
+
+const stop = () => {
+  if (raf) cancelAnimationFrame(raf)
+  raf = 0
+  running = false
+}
+
+onMounted(() => {
+  watch(isHome, (v) => {
+    if (v) start()
+    else stop()
+  }, { immediate: true })
+})
+
+onBeforeUnmount(() => {
+  stop()
 })
 </script>
 

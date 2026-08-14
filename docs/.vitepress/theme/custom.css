@@ -197,6 +197,12 @@
   z-index: 1;
 }
 
+/* 阅读模式：文档页强制浅色，隐藏主题切换按钮（由 ReadMode 组件控制 read-mode 类） */
+.read-mode .VPNavBarAppearance,
+.read-mode .VPSwitchAppearance {
+  display: none !important;
+}
+
 /* 页面底色透明，让星空在页边透出氛围；正文区用半透明「纸面」柔化背景，保证阅读清晰 */
 .VPContent,
 .VPDoc {
