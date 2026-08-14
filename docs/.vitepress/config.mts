@@ -87,7 +87,14 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '指南', link: '/guide/01-简介与安装' },
-          { text: '更新日志', link: '/changelog' }
+          { text: '更新日志', link: '/changelog' },
+          {
+            text: '语言',
+            items: [
+              { text: '简体中文', link: '/' },
+              { text: 'English', link: '/en/' }
+            ]
+          }
         ],
         sidebar: zhSidebar,
         outline: { level: [2, 3], label: '本页目录' },
@@ -107,7 +114,14 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Guide', link: '/en/guide/01-intro' },
-          { text: 'Changelog', link: '/en/changelog' }
+          { text: 'Changelog', link: '/en/changelog' },
+          {
+            text: 'Language',
+            items: [
+              { text: '简体中文', link: '/' },
+              { text: 'English', link: '/en/' }
+            ]
+          }
         ],
         sidebar: enSidebar,
         outline: { level: [2, 3], label: 'On this page' },

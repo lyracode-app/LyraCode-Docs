@@ -2,6 +2,11 @@
 title: Changelog
 ---
 
+## 2026-08-14 · Language switcher (简体中文 / English)
+
+- English version merged into the docs site: a "语言 / Language" navbar dropdown switches between Simplified Chinese and English from any page;
+- fixed structural errors in the en locale block of the site config (missing themeConfig nesting, stray token) — local build verified.
+
 ## 2026-08-14 · v1.0.0 Documentation site launch
 
 - VitePress-based official documentation site: home + 10 guides + tool reference + changelog;
@@ -12,6 +17,5 @@ title: Changelog
 
 ## Planned
 
-- [ ] English translations (i18n)
 - [ ] Generate tool reference from source
 - [ ] Optional Algolia search
