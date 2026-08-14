@@ -35,6 +35,7 @@ Thumbs.db
 # 临时文件
 *.tmp
 *.temp
+*.bak
 .nyc_output/
 .turbo/*.bak
 

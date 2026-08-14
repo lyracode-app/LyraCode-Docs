@@ -10,8 +10,8 @@ hero:
     alt: Lyra Code
   actions:
     - theme: brand
-      text: 快速开始
-      link: /guide/getting-started
+      text: 开始阅读
+      link: /guide/01-简介与安装
     - theme: alt
       text: 查看指南
       link: /guide/quick-start
