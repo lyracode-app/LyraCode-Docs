@@ -2,6 +2,8 @@ import { defineConfig } from 'vitepress'
 import { transformPageData } from './last-updated'
 
 export default defineConfig({
+  // GitHub Pages 部署时通过环境变量设置 base（如 /LyraCode-Docs/），本地开发默认 /
+  base: process.env.VITEPRESS_BASE || '/',
   title: 'Lyra Code',
   transformPageData,
   // 使用文件系统最后修改时间兜底各页"最后更新于"
