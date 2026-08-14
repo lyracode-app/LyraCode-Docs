@@ -37,3 +37,6 @@ Thumbs.db
 *.temp
 .nyc_output/
 .turbo/*.bak
+
+# 压缩包
+*.zip

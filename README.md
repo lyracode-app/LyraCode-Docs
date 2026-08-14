@@ -91,4 +91,4 @@ npm run docs:preview
 
 ## 许可证
 
-[AGPLv3-or-later](https://www.gnu.org/licenses/agpl-3.0.html)
+[AGPLv3](https://www.gnu.org/licenses/agpl-3.0.html)

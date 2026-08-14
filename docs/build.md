@@ -56,7 +56,7 @@ mkdir -p ~/.termux && (grep -qxF 'allow-external-apps=true' ~/.termux/termux.pro
 
 本项目采用**双重许可**：
 
-- Lyra Code 原创源代码可在 **AGPLv3-or-later** 下使用。
+- Lyra Code 原创源代码可在 **AGPLv3** 下使用。
 - 如果需要闭源分发、私有修改、商业例外或不希望遵守 AGPL copyleft 义务，需要获取**商业许可证**。
 - 第三方组件仍以其各自许可证为准。
 
