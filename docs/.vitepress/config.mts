@@ -5,6 +5,7 @@ const base = process.env.VITEPRESS_BASE || '/'
 export default defineConfig({
   // 部署到 GitHub Pages 时使用子路径 /LyraCode-Docs/（CI 通过 VITEPRESS_BASE 注入）
   base,
+  appearance: 'light',
   title: 'Lyra Code 使用文档',
   description: '面向 Android 的本地 AI Agent 应用 · 详细使用指南',
   lang: 'zh-CN',
