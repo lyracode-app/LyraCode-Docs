@@ -10,7 +10,7 @@ import { useData } from 'vitepress'
 const { page } = useData()
 const isHome = computed(() => {
   const p = page.value.relativePath
-  return !p || p === 'index.md'
+  return !p || p === 'index.md' || p === 'en/index.md'
 })
 
 const canvas = ref<HTMLCanvasElement | null>()
