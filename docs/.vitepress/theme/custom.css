@@ -144,10 +144,20 @@
   border-radius: 10px;
 }
 
-/* 表格圆角与内边距 */
+/* 表格圆角与内边距（移动端可横向滑动，避免内容被裁切） */
 .vp-doc table {
+  display: block;
+  width: 100%;
   border-radius: 10px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 表格单元格长内容自动换行（代码/路径等长字符串） */
+.vp-doc table th,
+.vp-doc table td {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /* 选中色 */

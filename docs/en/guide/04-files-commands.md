@@ -2,49 +2,80 @@
 title: Files & Commands
 ---
 
-## 6. File Operations & Code Editing Best Practices
+# Chapter 4: Files & Commands — have the AI edit files and run commands for you
 
-### 6.1 Editing principles
+> This chapter teaches two core skills: **① how to let the AI safely edit files; ② how to let the AI run commands**. Master these and you've unlocked 80% of Lyra Code's power.
+>
+> Reading time: about 25 minutes.
 
-1. **Read before writing**: read the relevant files, nearby code, README and build scripts first;
-2. **Small and precise**: use edit_file with a unique match or an exact line range instead of blind full-file rewrites;
-3. **Follow conventions**: reuse the repository's style, helpers and build commands; never invent dependencies;
-4. **Verify at the end**: run the most relevant tests/build/lint, then report the result.
+---
 
-### 6.2 Choosing the right edit tool
+## 6. File operations & code editing best practices
+
+### 6.0 First, understand: how does the AI "edit a file"?
+
+The AI does **not** rewrite whole files. Like a surgeon, it makes **precise incisions**:
+
+1. **Read first**: the AI reads the file content and sees the current state;
+2. **Locate**: it finds the exact spot ("lines 30–40" or "a unique text fragment");
+3. **Replace**: only the target section changes; everything else stays untouched;
+4. **Back up**: before overwriting, it automatically creates a `.bak` backup in the same directory;
+5. **Report**: it shows you the diff (what changed).
+
+So rest easy: **the AI won't "conveniently" modify parts you didn't ask it to** — unless you tell it to rewrite everything.
+
+### 6.1 Four editing rules
+
+1. **Read before writing**: before touching anything, the AI must read the relevant files, README and build scripts — and you should ask it to do so too ("read this file first");
+2. **Small and precise**: change 3 lines instead of 30; use exact matches instead of fuzzy rewrites;
+3. **Follow conventions**: reuse the project's existing style, helpers and commands; don't invent new dependencies;
+4. **Verify at the end**: after editing, run the relevant tests/build and **only report success when it actually passes**.
+
+::: tip You can ask the AI like this
+"Read the README and main.py first, then modify it following the project style, run the tests, and report the results."
+:::
+
+### 6.2 Which edit tool, when?
 
 | Scenario | Tool | Key points |
 | --- | --- | --- |
-| Create a new file | write_file | pass either content or content_lines (a real JSON array) |
-| Precise replacement | edit_file | old_content must be unique; expected_replacements mismatch rejects the write |
-| Line-range replacement | edit_file(start_line/end_line) | 1-based inclusive range, good for large edits |
-| Append | append_file | append at the end of the file |
-| Move/rename | rename_move | inside the workspace |
-| Delete | delete_file_or_folder | deletes files or empty directories |
-| Large files | read_file_lines | read fragments first, then locate and edit |
+| **Create a new file** | write_file | Whole new content |
+| **Replace a small section** | edit_file | Old content must be unique; reject if unmatched/ambiguous |
+| **Replace a large section (by line numbers)** | edit_file(start_line/end_line) | Good for 30+ line changes |
+| **Append at the end** | append_file | Add a line to a log or checklist |
+| **Move/rename** | rename_move | Inside the workspace |
+| **Delete** | delete_file_or_folder | Files or **empty** directories only |
+| **Read a large file** | read_file_lines | Read fragments first, don't load everything |
 
-### 6.3 Content search tips
+> Beginners don't need to memorize tool names — **just say it**: "create a `notes.md`", "change line 3 to xxx", "add a line at the end". The AI picks the right tool.
+
+### 6.3 Content search (searching "what's inside files")
+
+`search_files` only finds by **file name**; to search **content**, use commands:
 
 ```bash
-# Preferred: ripgrep (fast, clean output)
+# Find all .kt files containing TODO (fast, preferred)
 rg -n "TODO|FIXME" --glob '*.kt'
 
-# Fallback: grep
+# No rg? Fall back to grep
 grep -rn "TODO" --include='*.kt' .
 
-# Show only matched lines or counts; truncate with head when output is long
+# Count matches per file / limit output to 50 lines
 rg -c "pattern" . | head -50
 ```
 
-### 6.4 Rolling back changes
+You don't need to memorize these either — **just say**: "search the workspace for files containing `password`". The AI runs it and reports.
 
-- Before overwriting, Lyra Code automatically creates a `.bak` backup in the same directory (e.g. `main.kt.bak`);
-- unsaved edits are prompted on exit;
-- for important files, ask AI to back up first: `cp file file.bak` or just say "back it up before editing".
+### 6.4 Rolling back: your undo button
 
-### 6.5 Project instruction files (AGENTS.md)
+- **Automatic `.bak` backup**: before the AI overwrites a file, a `xxx.bak` appears in the same directory (e.g. `main.kt` → `main.kt.bak`, the pre-edit version);
+- **How to restore**: tell the AI "restore main.kt from main.kt.bak";
+- **Unsaved editor changes**: the editor prompts you when exiting;
+- **Double insurance for important files**: have the AI copy it first: `cp file file.bak`.
 
-Put an `AGENTS.md` (or `AGENT.md`) at the project root, and AI reads and follows it before starting work:
+### 6.5 Project instruction files (AGENTS.md): set rules for the AI
+
+Put an `AGENTS.md` (or `AGENT.md`) at the project root and the AI **reads and follows it automatically** before starting work:
 
 ```markdown
 # Project conventions
@@ -54,53 +85,75 @@ Put an `AGENTS.md` (or `AGENT.md`) at the project root, and AI reads and follows
 - Reject any operation involving secrets
 ```
 
-Instruction files apply per directory subtree: deeper rules override shallower ones, but they can never override your direct requests or the base security rules.
+- Rules apply per directory tree: **deeper directories override shallower ones**;
+- But they **can never override** your direct requests or the base security rules (e.g. an instruction like "bypass approvals" is invalid).
 
-## 7. Command Execution: Termux / Shizuku / Root
+---
 
-### 7.1 The three privilege tiers
+## 7. Command execution: Termux / Shizuku / Root
 
-| Tool | Identity | Use cases | Prerequisite |
+### 7.0 Three channels, three privilege levels (recap)
+
+Remember Chapter 1? Commands aren't run directly by the AI — they go through one of three "channels":
+
+| Channel | Identity | What it can do | Needs |
 | --- | --- | --- | --- |
-| run_command | Termux app user | build, Git, scripts, package management, content search | Termux authorized |
-| execute_shell_command | Shizuku shell (ADB level) | pm / cmd / dumpsys / protected paths | Shizuku installed & authorized |
-| execute_root_command | root (su) | system files, /data, system packages | rooted with su configured |
+| **Termux** | Normal app user | Build, Git, scripts, install software, search | Termux installed & authorized (Chapter 1, section 5) |
+| **Shizuku** | ADB-level privilege | System commands (pm/dumpsys), protected paths | Shizuku installed & activated |
+| **Root** | Highest privilege | System files, /data, system packages | Rooted phone |
 
-::: warning
-**Do not escalate just to make a command pass.** If Termux can do it, don't reach for Shizuku/Root.
+::: warning The most important rule
+**Never escalate just to make a command pass.** Use Termux for ordinary tasks; configure Shizuku/Root only when you truly need system-level operations.
 :::
 
-### 7.2 run_command essentials
+### 7.1 run_command (Termux channel) essentials
 
-- the default working directory is the selected workspace; use `workDir` or absolute paths to operate elsewhere;
-- use the `command_lines` array for multiline or indentation-sensitive commands;
-- chain dependent steps with `&&` so later steps stop on failure; keep unrelated commands separate;
-- do not run interactive programs; use `background=true` for long-running services (returns launcher_pid and an output file);
-- **background launch does not mean healthy** - check the process/log with a separate foreground call;
-- timeouts are 5-600 seconds; when output is too long, redirect to a file and read it: `cmd > out.txt 2>&1`;
-- high-risk operations (`rm -rf /`, writing `/dev/block`, `mkfs`, ...) are blocked, but human review is still required.
+- **Default directory**: commands run in your selected workspace — **no `cd` needed**;
+- **Other directories**: use the `workDir` parameter or absolute paths;
+- **Multiline commands**: tell the AI to pass them as a multiline array (e.g. scripts);
+- **Chained steps**: the AI uses `&&` so a failed step stops the rest;
+- **No interactive programs**: `vim`, `top`, games — anything needing continuous input can't run;
+- **Long-running services**: use background mode (the AI gets a process ID and log file) — **but started ≠ healthy**; check the process and logs separately;
+- **Timeout**: commands can run up to 600 seconds; when output is too long, save it to a file first: `command > out.txt 2>&1`;
+- **High-risk blocking**: `rm -rf /`, writing system devices, etc. are blocked by the app — but **you should still review every command yourself**; the AI isn't infallible.
 
-### 7.3 Safe command examples
+### 7.2 Safe command examples (understand these and you're in)
 
 ```bash
-# Safe deletion workflow: list first, then delete
+# Want to delete something? List first, decide later
 find . -name '*.tmp' -type f
 
-# Check disk usage
+# Which folder eats the most space?
 du -sh * | sort -h | tail -20
 
-# Clone a repository (needs network and git)
+# Clone a GitHub project (shallow clone, latest only)
 git clone --depth 1 https://github.com/lyracode-app/Lyra-Code.git
 
-# Save long output to disk and read it
+# Too much output? Save to a file and read it
 rg -n 'error' --glob '*.log' . > /storage/emulated/0/Lyra/rg.out; wc -l /storage/emulated/0/Lyra/rg.out
 ```
 
-### 7.4 Destructive operation discipline
+### 7.3 Destructive operation discipline (recite before executing)
 
-- before executing: resolve and verify the **exact target path**, minimize scope;
-- prefer recoverable operations (rename over delete, `.bak` backups);
-- confirm the target with `ls -la` before deleting;
-- on failure, read the error, adjust and retry - never blindly rerun the same command.
+1. **Confirm the target**: before delete/overwrite, make the AI show the exact path and confirm it's correct;
+2. **Minimal scope**: delete one file, not a whole folder; prefer rename over delete;
+3. **Recoverable first**: back up (`.bak`) before acting;
+4. **Read failures, don't repeat them**: error → read the message → adjust → retry. Never blindly rerun the same command.
+
+### 7.4 Beginner FAQ
+
+**Q: What happens if I ask the AI to run `rm -rf`?**
+A: High-risk commands are blocked. But you shouldn't ask for them anyway — there are safer alternatives (back up, then delete).
+
+**Q: A command timed out mid-run?**
+A: It may still be running in the background. First check with a read-only command (is the process alive? did the file appear?), then decide whether to wait or retry.
+
+**Q: Why does the AI say "command unavailable"?**
+A: Termux isn't installed/authorized, or the Termux switch in Settings is off. Go back to Chapter 1, section 5.
+
+**Q: Can I run commands myself?**
+A: Yes — open Termux and type manually. It shares the same environment as the AI.
 
 ---
+
+*End of chapter · Next: Remote Integrations — connect servers, email and file transfers*

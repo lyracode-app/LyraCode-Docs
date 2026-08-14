@@ -2,93 +2,140 @@
 title: Mini Server & Skills
 ---
 
-## 9. Built-in Mini Server
+# Chapter 6: Mini Server & Skills — run a website on your phone, teach the AI new skills
 
-The mini server is a built-in HTTP/HTTPS static file server rooted at the **current workspace**, used to preview and debug local websites, documentation sites and generated frontend projects.
+> This chapter covers two cool features: **① turning your phone into a mini web server** to preview pages you build; **② installing "skill packs" (Skills)** so the AI learns specific abilities.
+>
+> Reading time: about 20 minutes.
 
-### 9.1 Workflow
+---
 
-1. Ask AI to start it: `manage_mini_server(action=start)` with an optional port and host;
-2. Get the address: `get_mini_server_status` returns the local URL and LAN URLs;
-3. Preview and debug in a browser;
-4. On issues, check `read_mini_server_logs` for connections, resource loading, 404s, auth failures and JS errors;
-5. Stop it when done: `manage_mini_server(action=stop)`.
+## 9. The built-in mini server
 
-### 9.2 Options
+### 9.0 What is it? — in plain words
 
-| Option | Description | Security note |
-| --- | --- | --- |
-| host | `127.0.0.1` device-only; `0.0.0.0` exposes to LAN/port mapping | exposed once on the LAN |
-| port | listening port | - |
-| username/password | Basic auth | empty password = no auth |
-| protocol | HTTP or HTTPS | HTTP is plaintext |
-| TLS cert/key | PEM chain or keystore | self-signed certs aren't trusted by browsers |
-| force_https | redirect HTTP to HTTPS | needs a cert first |
-| spa_fallback | fall back to index.html for SPAs | good for Vue/React builds |
-| mdns | LAN discovery name | - |
+The mini server = **a small website server running on your phone**.
 
-### 9.3 Debugging tips
+- Its "root directory" is **the current workspace** folder;
+- Once started, you (or devices on your LAN) can visit pages on your phone through a browser;
+- The most typical use: **preview the website / docs site / front-end project you're building** — see the effect immediately after each change.
 
-- **404 / failed assets**: check the requested path in the logs; verify the file exists and casing matches;
-- **auth failures**: check username/password against Basic Auth;
-- **JS errors**: the log records page JavaScript errors - fix syntax/path issues first;
-- **changes not applied**: static servers may cache - hard refresh (Ctrl+F5 / clear cache);
-- **SPA route 404**: enable spa_fallback;
-- **VitePress/Vite preview**: build the static output into the workspace first, then serve that directory.
+### 9.1 How to use it: five steps
 
-::: danger
-Before binding to `0.0.0.0`, tunneling or going public, check whether the served directory contains sensitive files, whether a password is set, and whether HTTPS is enabled.
+1. **Ask the AI to start it**: say "start the mini server on port 8080" (it calls the built-in tool, possibly with a confirmation popup);
+2. **Get the address**: the AI returns the **local address** (e.g. `http://127.0.0.1:8080/`) and a **LAN address** (e.g. `http://192.168.x.x:8080/`);
+3. **Open the preview**: open the address in your phone browser and see your site;
+4. **Check logs when problems occur**: ask the AI to "look at the server logs" to diagnose 404s, load failures, JS errors;
+5. **Stop it when done**: say "stop the mini server".
+
+::: tip Beginner example
+If the AI just made an `index.html` in your workspace, say:
+"Start the mini server so I can preview index.html"
 :::
 
-## 10. Skills Packages
+### 9.2 Configuration at a glance (don't memorize, just understand)
 
-Skills are optional "capability packages" for the Agent. A Skill contains a `SKILL.md` description and companion resources, so the Agent follows the instructions for related tasks.
+| Setting | What it does | Safety note |
+| --- | --- | --- |
+| host | `127.0.0.1` = only this phone; `0.0.0.0` = LAN can access | Exposed = others can open your page |
+| port | Server port (e.g. 8080) | Conflicts cause startup failure |
+| username/password | Access password (Basic auth) | **No password = anyone can open** |
+| protocol | HTTP or HTTPS | HTTP is plaintext — don't put sensitive stuff |
+| TLS cert/key | Certificate for HTTPS | Self-signed certs warn in browsers |
+| force_https | Redirect HTTP to HTTPS | Requires cert configured first |
+| spa_fallback | Fall back to index.html for SPA routes | For Vue/React built sites |
+| mdns | LAN discovery name | Easy to find from other devices |
 
-### 10.1 Three import methods
+### 9.3 Troubleshooting
 
-1. **zip package**: import from a file (e.g. `novel-skill.zip`);
-2. **a single SKILL.md**: import the Markdown file directly;
-3. **Git repo link**: import from GitHub / Gitee / GitLab repositories.
+- **404 (page not found)**: check the log's requested path; confirm the file exists and the case matches;
+- **Auth failure**: check username/password match the settings;
+- **JS errors**: the log records page script errors — fix the script first;
+- **Changes not appearing**: browser cache — force refresh (clear cache / reload);
+- **SPA refresh 404**: enable `spa_fallback`;
+- **Previewing VitePress/Vite projects**: build static files first (`build`), then point the server at the output directory.
 
-You can also **edit SKILL.md manually** in the app to create a Skill.
+::: danger Safety red line
+Before binding to `0.0.0.0`, tunneling or exposing to the public internet, **always check**: are there sensitive files in the served directory? Is a password set? Is HTTPS on? If not, stay on `127.0.0.1`.
+:::
 
-### 10.2 Standard SKILL.md structure
+### 9.4 Beginner FAQ
+
+**Q: Why can't other LAN devices open it?**
+A: ① Is the server bound to `0.0.0.0` (`127.0.0.1` is local-only)? ② Are both devices on the same Wi-Fi? ③ Is your phone's firewall/router blocking it?
+
+**Q: Startup failed / port in use?**
+A: Use a different port (e.g. 8080 → 9000).
+
+**Q: Can I host a production site with it?**
+A: It's a local preview tool, not a production server. For production, use a cloud server.
+
+---
+
+## 10. Skills
+
+### 10.0 What is this? — skill books for the AI
+
+A **Skill** is a "skill pack" containing a manual (`SKILL.md`) and supporting files. Once installed, the AI **opens that manual** when a related task comes up and works by its instructions.
+
+Analogy: the default AI is "a capable-but-generic intern"; a Skill is a **job training manual** — install the "novel writing" skill and it knows how to write novels according to your outline.
+
+### 10.1 How to install a Skill (three ways)
+
+1. **zip package**: import a skill pack file others sent you (e.g. `novel-skill.zip`);
+2. **A single SKILL.md**: just one manual document — import the Markdown file;
+3. **Git repository link**: paste a GitHub / Gitee / GitLab repository address.
+
+> You can also **manually edit SKILL.md** in the app to create a skill from scratch.
+
+### 10.2 What does SKILL.md look like? (standard structure)
 
 ```markdown
 ---
-name: my-skill
-description: One sentence on what this skill does and when it triggers
+name: my-skill              # skill name
+description: one sentence: what this skill does and when it triggers
 ---
 
 # Instructions
 
-（How the Agent should act after reading this: steps, rules, output format, caveats）
+(How the AI should act after reading this: steps, rules, output format, caveats)
 
 ## Reference files
 
 - prompts/template.md
 - scripts/process.py
-
 ```
 
-Key points:
+**Two key points**:
 
-- `name` / `description` decide whether the Agent loads it - write the trigger scenarios clearly;
-- the Agent reads SKILL.md first to judge relevance and **reads internal files on demand** to avoid context bloat;
-- when a task strongly matches a Skill, the Agent calls `list_skill_files` / `read_skill_file` to read its contents.
+- `name` and `description` decide **whether the AI loads it** — describe clearly "when to use this";
+- The AI **reads SKILL.md first** to judge relevance, then **reads internal files as needed** — it doesn't load everything at once (saves tokens).
 
-### 10.3 Writing a good Skill
+### 10.3 How to write a great Skill (advanced)
 
-- phrase the description as "when the user wants to do X" to reduce false triggers;
-- put stable processes (steps, formats, checklists) into SKILL.md to avoid repeated dialogue;
-- keep large scripts/templates in sub-files and reference them;
-- note environment assumptions (desktop/cloud tools may not exist on Android; the Agent will adapt);
-- never put secrets in Skill files.
+- Describe with "when the user wants to do X" phrasing to reduce false triggers;
+- Put stable workflows (steps, formats, checklists) into SKILL.md so the AI doesn't rediscover them each time;
+- Put large scripts/templates in sub-files; SKILL.md is just the index + how to call them;
+- Note environment assumptions (some desktop/cloud tools may not exist on Android; the AI adapts);
+- **Never put secrets in Skill files** (they get read along with the skill).
 
-### 10.4 Enabling & management
+### 10.4 Enabling & managing
 
-- Skills can be enabled/disabled individually; disabled ones are no longer injected;
-- you can list, update and delete Skills through the configuration manager;
-- when packaging a Skill, keep SKILL.md at the root and reference sub-files with relative paths.
+- Each Skill can be individually **enabled/disabled** — disabled skills aren't auto-loaded;
+- Use the config manager to list, update and delete Skills;
+- When packaging, keep the structure right: **SKILL.md at the root**, sub-files referenced by relative paths.
+
+### 10.5 Beginner FAQ
+
+**Q: Are Skills viruses? Any risk?**
+A: A Skill is essentially text instructions + files. But **don't install Skills from unknown sources** — they might teach the AI dangerous operations. Only use trusted (official/well-known author) ones.
+
+**Q: Will many Skills slow things down?**
+A: The AI reads on demand, not everything at once. But vaguely described Skills may trigger accidentally — write clear descriptions.
+
+**Q: Can a Skill replace my prompts?**
+A: Yes. Once a routine is solidified into a Skill, just say "start" and the AI knows the whole flow.
 
 ---
+
+*End of chapter · Next: Memory, Tasks & Backup — let the AI remember you, work on schedule, and keep your data safe*

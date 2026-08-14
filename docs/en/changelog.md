@@ -2,6 +2,18 @@
 title: Changelog
 ---
 
+## 2026-08-14 · Mobile table scrolling fix
+
+- Fixed a theme CSS issue (`overflow: hidden`) that clipped wide tables on mobile;
+- Tables now scroll horizontally on touch devices; long cell content (code/paths) wraps automatically.
+
+## 2026-08-14 · English beginner guides
+
+- All 10 English guides rewritten in the same beginner-first style as the Chinese version: concept primers, step-by-step walkthroughs, common mistakes and FAQs;
+- Chapter 1 adds a concept primer (AI models / API key / Agent / Workspace / Termux, etc.);
+- Chapter 10 adds a learning path and a full glossary;
+- Mirrors the Chinese beginner documentation.
+
 ## 2026-08-14 · Beginner-friendly guide rewrite
 
 - All 10 Chinese guides rewritten in a step-by-step, beginner-first style: concept primers, detailed walkthroughs, common mistakes and FAQs;
