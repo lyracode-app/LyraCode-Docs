@@ -11,10 +11,10 @@ let timer = 0
 
 const scan = () => {
   if (!observer) return
+  // 只对标题、表格、代码块、提示块、引用、图片做淡入，段落/列表不做（避免阅读干扰）
   const sel = [
     '.vp-doc h2', '.vp-doc h3', '.vp-doc h4',
-    '.vp-doc p', '.vp-doc li', '.vp-doc table',
-    '.vp-doc blockquote', '.vp-doc img',
+    '.vp-doc table', '.vp-doc blockquote', '.vp-doc img',
     '.vp-doc div[class*="language-"]', '.vp-doc .custom-block'
   ].join(', ')
   document.querySelectorAll(sel).forEach((el) => {

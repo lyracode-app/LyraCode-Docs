@@ -197,12 +197,23 @@
   z-index: 1;
 }
 
-/* 内容区透明，露出星空背景 */
+/* 页面底色透明，让星空在页边透出氛围；正文区用半透明「纸面」柔化背景，保证阅读清晰 */
 .VPContent,
-.VPDoc .content-container,
-.vp-doc,
 .VPDoc {
   background: transparent;
+}
+
+:root {
+  --vp-doc-bg: rgba(255, 255, 255, 0.86);
+}
+
+.dark {
+  --vp-doc-bg: rgba(18, 20, 29, 0.86);
+}
+
+.VPDoc .content-container,
+.vp-doc {
+  background: var(--vp-doc-bg);
 }
 
 /* 导航毛玻璃 */
@@ -298,11 +309,11 @@
   transform: translateY(-3px);
 }
 
-/* 正文滚动淡入（由 RevealOnScroll 添加 .reveal / .revealed） */
+/* 正文滚动淡入（由 RevealOnScroll 添加 .reveal / .revealed）——幅度轻微，不干扰阅读 */
 .reveal-enabled .vp-doc .reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  opacity: 0.3;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .reveal-enabled .vp-doc .reveal.revealed {
@@ -320,7 +331,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: hero-gradient-flow 8s linear infinite;
+  animation: hero-gradient-flow 14s linear infinite;
 }
 
 .page-gradient-title {
