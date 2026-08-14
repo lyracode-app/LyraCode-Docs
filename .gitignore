@@ -36,4 +36,4 @@ Thumbs.db
 *.tmp
 *.temp
 .nyc_output/
-.turbo/
+.turbo/*.bak
