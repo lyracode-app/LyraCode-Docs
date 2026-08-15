@@ -13,7 +13,6 @@ const theme: Theme = {
   Layout() {
     return h(DefaultTheme.Layout, null, {
       'layout-top': () => [h(ScrollProgress), h(RevealOnScroll)],
-      'nav-bar-content-after': () => h(LanguageSwitcher),
       'nav-screen-content-after': () => h(LanguageSwitcher, { screen: true }),
       'doc-before': () => h(PageTitle)
     })
