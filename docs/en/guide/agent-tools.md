@@ -2,9 +2,9 @@
 title: Agent Tools
 ---
 
-# Chapter 3: Agent Tools — the "hands" the AI can use
+# Chapter 11: Agent Tools — the "hands" the AI can use
 
-> Last chapter we connected a model. This chapter answers a key question: **besides typing, what can the AI actually DO?**
+> In previous chapters we connected a model and toured the interface. This chapter answers a key question: **besides typing, what can the AI actually DO?**
 >
 > Answer: through a set of **tools**. We'll explain each tool group, its boundaries, its risks and what you should watch out for.
 >
@@ -12,9 +12,7 @@ title: Agent Tools
 
 ---
 
-## 5. The Agent tool system
-
-### 5.0 What is a "tool"? — in plain words
+## 11.1 What is a "tool"? — in plain words
 
 Think of the AI as an assistant that **can only talk**. It can't touch your phone by itself — but the app gives it a pair of gloves:
 
@@ -24,16 +22,18 @@ So:
 
 - More tools → the AI can do more;
 - Every tool has clear boundaries → the AI can't overstep;
-- Every tool has its own on/off switch → disable the ones you don't trust.
+- Every tool has its own on/off switch in the "Agent tools page" → disable the ones you don't trust.
 
-### 5.1 Tool categories at a glance (plain explanations)
+**Proactive agents**: some Agent tools are executed by the AI with **active feedback** rather than relying on manual user operations. For example, the **asking-the-user questions** tool is proactive, because the AI decides to call it based on its own way of thinking.
+
+## 11.2 Tool categories at a glance (plain explanations)
 
 | Category | Representative tools | What it does (plain words) |
 | --- | --- | --- |
 | Files & directories | list_directory / search_files / get_file_info / create_folder / rename_move / delete | Look at folders, find files, create folders, rename, delete |
 | File I/O | read_file / read_file_lines / write_file / edit_file / append_file | Read files, create files, edit precisely, append |
 | Global storage | global_* tools | Operate phone storage **outside the workspace** (photos, Downloads…) |
-| Download | download_file | Download files from the web |
+| Download | download_file | Download files from the web to your phone |
 | Commands | run_command | Run commands in Termux (install software, run scripts) |
 | System | execute_shell_command / execute_root_command | System-level operations (need Shizuku / Root) |
 | Planning | set_todo_list / update_todo_item | Build and update task checklists |
@@ -43,7 +43,7 @@ So:
 | Backup | export_backup / import_backup | Back up / restore your data |
 | Misc | get_current_time / get_current_location / get_device_hardware_info / list_installed_apps | Time, location, hardware info |
 
-### 5.2 Workspace vs global storage (the most confusing concept)
+## 11.3 Workspace vs global storage (the most confusing concept)
 
 ```text
 ┌─────────────────────────────────────────────┐
@@ -71,7 +71,7 @@ So:
 For safety. You can't have the AI casually delete any file on your phone — by confining it to the workspace, even a mistake has limited damage.
 :::
 
-### 5.3 Finding files: which tool?
+## 11.4 Finding files: which tool?
 
 | What you want | Which tool | Example |
 | --- | --- | --- |
@@ -84,7 +84,7 @@ For safety. You can't have the AI casually delete any file on your phone — by 
 `search_files` **only matches file names/paths — it does NOT search file contents**. To search contents you need a command (`rg`). This is a classic beginner mistake: the keyword is in the file but the search finds nothing — just switch methods.
 :::
 
-### 5.4 Downloading files: use download_file
+## 11.5 Downloading files: use download_file
 
 Downloads use the **built-in downloader**, which is more reliable than the command-line curl (progress bar, redirect following, checksum):
 
@@ -102,7 +102,7 @@ download_file
 
 The AI will call the tool and start after your approval.
 
-### 5.5 TODO planning: the AI's task checklist
+## 11.6 TODO planning: the AI's task checklist
 
 When a task is complex (multiple steps, multiple files, risky), the AI proactively creates a **TODO list** so you can see its plan:
 
@@ -117,7 +117,7 @@ When a task is complex (multiple steps, multiple files, risky), the AI proactive
 - Complex things (editing code, writing docs, remote operations) **must have** one;
 - You can say anytime: "show your TODO", "skip a step", "do step 2 first" to direct it.
 
-### 5.6 Web search & source management
+## 11.7 Web search and source management
 
 The AI follows a pipeline when researching:
 
@@ -127,7 +127,7 @@ The AI follows a pipeline when researching:
 
 You can also configure a **web search blocklist** in Settings: add domains you don't want the AI to open (e.g. `example.com`), and it can't open them; `*.x.com` wildcard supported (to fully block a site, add both `x.com` and `*.x.com`).
 
-### 5.7 Approvals & auditing: every action is visible
+## 11.8 Approvals & auditing: every action is visible
 
 **This is the biggest difference from ordinary AI, and the reason to trust it:**
 
@@ -137,7 +137,7 @@ You can also configure a **web search blocklist** in Settings: add domains you d
 - **Diffs for file edits**: after modifying a file, the AI shows what changed (added/removed lines) for your review;
 - **Disable anytime**: turn off any tool in the Agent tools page and the AI loses it immediately.
 
-### 5.8 Beginner FAQ
+## 11.9 Beginner FAQ
 
 **Q: Can the AI read my WeChat/QQ chat history?**
 A: No. The AI's tools can only access the workspace, explicitly authorized storage paths, and configured remote accounts. App data like chat history lives in protected areas (`Android/data`) it can't reach.
@@ -153,4 +153,4 @@ A: It may be disabled in the tools page, or needs extra setup (e.g. SSH needs an
 
 ---
 
-*End of chapter · Next: Files & Commands — have the AI edit files and run commands for you*
+*End of chapter · Next: Files & Code Editing — let the AI edit files safely*
