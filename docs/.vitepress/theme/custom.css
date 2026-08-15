@@ -49,18 +49,6 @@
   animation: hero-gradient-flow 9s ease infinite;
 }
 
-/* hero 区域定位（粒子背景锚点） */
-.VPHomeHero {
-  position: relative;
-  overflow: hidden;
-}
-
-.VPHomeHero .container,
-.VPHomeHero .image-container {
-  position: relative;
-  z-index: 1;
-}
-
 /* hero：logo 光晕呼吸 */
 @keyframes hero-glow-pulse {
   0%, 100% { box-shadow: 0 14px 48px rgba(91, 124, 250, 0.30); }
@@ -197,34 +185,7 @@
   }
 }
 
-/* ========== 全站特效 ========== */
-
-/* 全局层级：内容在星空背景之上 */
-.VPNav,
-.VPContent,
-.VPFooter {
-  position: relative;
-  z-index: 1;
-}
-
-/* 页面底色透明，让星空在页边透出氛围；正文区用半透明「纸面」柔化背景，保证阅读清晰 */
-.VPContent,
-.VPDoc {
-  background: transparent;
-}
-
-:root {
-  --vp-doc-bg: rgba(255, 255, 255, 0.86);
-}
-
-.dark {
-  --vp-doc-bg: rgba(18, 20, 29, 0.86);
-}
-
-.VPDoc .content-container,
-.vp-doc {
-  background: var(--vp-doc-bg);
-}
+/* ========== 导航 ========== */
 
 /* 导航毛玻璃 */
 :root {
@@ -403,4 +364,10 @@
   .VPDoc h1 {
     animation: none;
   }
+}
+
+/* 语言切换使用自定义 LanguageSwitcher，隐藏默认主题自带菜单（其路径映射会导致跳回首页） */
+.VPNavBarTranslations,
+.VPNavScreenTranslations {
+  display: none;
 }
