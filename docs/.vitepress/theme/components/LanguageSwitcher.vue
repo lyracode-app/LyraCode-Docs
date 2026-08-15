@@ -66,8 +66,7 @@ const isOpen = ref(false)
 
 <template>
   <div v-if="links.length" class="LanguageSwitcher">
-    <!-- 移动端：抽屉菜单内 -->
-    <div v-if="screen" class="screen-wrapper" :class="{ open: isOpen }">
+    <div class="screen-wrapper" :class="{ open: isOpen }">
       <button class="screen-title" type="button" @click="isOpen = !isOpen">
         <span class="vpi-languages icon lang" />
         {{ label }}
@@ -79,135 +78,11 @@ const isOpen = ref(false)
         </li>
       </ul>
     </div>
-
-    <!-- 桌面端：导航栏下拉 -->
-    <div
-      v-else
-      class="flyout"
-      @mouseenter="isOpen = true"
-      @mouseleave="isOpen = false"
-    >
-      <button
-        class="flyout-button"
-        type="button"
-        aria-haspopup="true"
-        :aria-expanded="isOpen"
-        :aria-label="label"
-        @click="isOpen = !isOpen"
-        @blur="isOpen = false"
-      >
-        <span class="vpi-languages option-icon" />
-        <span class="flyout-text">{{ label }}</span>
-        <span class="vpi-chevron-down text-icon" />
-      </button>
-
-      <div class="menu">
-        <div class="menu-card">
-          <p class="menu-title">{{ label }}</p>
-          <a v-for="item in links" :key="item.text" class="menu-link" :href="item.link">
-            {{ item.text }}
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <style scoped>
-/* ===== 桌面端下拉（参照默认主题 VPFlyout / VPMenu） ===== */
-.flyout {
-  position: relative;
-}
-
-.flyout:hover {
-  color: var(--vp-c-brand-1);
-  transition: color 0.25s;
-}
-
-.flyout:hover .flyout-text {
-  color: var(--vp-c-text-2);
-}
-
-.flyout-button {
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  height: var(--vp-nav-height);
-  color: var(--vp-c-text-1);
-  transition: color 0.5s;
-}
-
-.flyout-text {
-  display: flex;
-  align-items: center;
-  line-height: var(--vp-nav-height);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-  transition: color 0.25s;
-}
-
-.option-icon {
-  font-size: 16px;
-}
-
-.text-icon {
-  margin-left: 4px;
-  font-size: 14px;
-}
-
-.menu {
-  position: absolute;
-  top: calc(var(--vp-nav-height) / 2 + 20px);
-  right: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
-}
-
-.flyout:hover .menu,
-.flyout-button[aria-expanded='true'] + .menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.menu-card {
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 128px;
-  border: 1px solid var(--vp-c-divider);
-  background-color: var(--vp-c-bg-elv);
-  box-shadow: var(--vp-shadow-3);
-  transition: background-color 0.5s;
-}
-
-.menu-title {
-  padding: 0 24px 0 12px;
-  line-height: 32px;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--vp-c-text-1);
-}
-
-.menu-link {
-  display: block;
-  border-radius: 6px;
-  padding: 0 12px;
-  line-height: 32px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-  white-space: nowrap;
-  transition: background-color 0.25s, color 0.25s;
-}
-
-.menu-link:hover {
-  color: var(--vp-c-brand-1);
-  background-color: var(--vp-c-default-soft);
-}
-
-/* ===== 移动端抽屉（参照默认主题 VPNavScreenTranslations） ===== */
+/* ===== 抽屉菜单（三点菜单）内语言切换（参照默认主题 VPNavScreenTranslations） ===== */
 .screen-wrapper {
   height: 24px;
   overflow: hidden;
