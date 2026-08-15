@@ -367,7 +367,8 @@
 }
 
 /* 语言切换使用自定义 LanguageSwitcher，隐藏默认主题自带菜单（其路径映射会导致跳回首页） */
+/* 默认组件自带 `[data-v-*]` 作用域属性，特异性更高，需 !important 才能压过其 ≥1280px 的 display:flex */
 .VPNavBarTranslations,
 .VPNavScreenTranslations {
-  display: none;
+  display: none !important;
 }

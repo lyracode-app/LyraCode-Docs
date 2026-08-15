@@ -3,24 +3,103 @@ import { transformPageData } from './last-updated'
 
 const base = process.env.VITEPRESS_BASE || '/'
 
+// 侧边栏：顶层分组默认折叠；主题子分组也可单独折叠，当前页面所在分组会自动展开
 const zhSidebar = [
   {
     text: '使用指南',
+    collapsed: true,
     items: [
-      { text: '简介与安装', link: '/guide/intro' },
-      { text: '界面与模型', link: '/guide/interface-models' },
-      { text: 'Agent 工具', link: '/guide/agent-tools' },
-      { text: '文件操作与命令执行', link: '/guide/files-commands' },
-      { text: '远程集成', link: '/guide/remote' },
-      { text: '微型服务器与 Skills', link: '/guide/server-skills' },
-      { text: '记忆、定时任务与备份', link: '/guide/memory-tasks-backup' },
-      { text: '统计、诊断与多模态', link: '/guide/stats-media' },
-      { text: '安全与排障', link: '/guide/security-troubleshooting' },
-      { text: '高级工作流与附录', link: '/guide/workflows-appendix' }
+      {
+        text: '入门',
+        collapsed: true,
+        items: [
+          { text: '简介与概念', link: '/guide/intro' },
+          { text: '安装与配置', link: '/guide/install' },
+          { text: '快速上手', link: '/guide/quick-start' }
+        ]
+      },
+      {
+        text: '界面与对话',
+        collapsed: true,
+        items: [
+          { text: '界面总览', link: '/guide/interface' },
+          { text: '对话操作', link: '/guide/chat' },
+          { text: '对话管理', link: '/guide/chat-management' },
+          { text: '多模态与内容渲染', link: '/guide/media' },
+          { text: '个性化与主题', link: '/guide/personalization' }
+        ]
+      },
+      {
+        text: '模型配置',
+        collapsed: true,
+        items: [
+          { text: '模型与多服务商', link: '/guide/models' },
+          { text: '模型高级配置', link: '/guide/model-config' },
+          { text: '子代理编排', link: '/guide/sub-agents' }
+        ]
+      },
+      {
+        text: 'Agent 能力',
+        collapsed: true,
+        items: [
+          { text: 'Agent 工具', link: '/guide/agent-tools' },
+          { text: '文件与代码编辑', link: '/guide/files' },
+          { text: '命令执行', link: '/guide/commands' }
+        ]
+      },
+      {
+        text: '远程与网络',
+        collapsed: true,
+        items: [
+          { text: '远程服务', link: '/guide/remote' },
+          { text: 'MCP 接入', link: '/guide/mcp' }
+        ]
+      },
+      {
+        text: '本地服务与自动化',
+        collapsed: true,
+        items: [
+          { text: '微型服务器', link: '/guide/mini-server' },
+          { text: '定时任务与后台任务', link: '/guide/scheduled-tasks' }
+        ]
+      },
+      {
+        text: 'AI 能力扩展',
+        collapsed: true,
+        items: [
+          { text: 'Skills 技能包', link: '/guide/skills' },
+          { text: '记忆与指令', link: '/guide/memory' }
+        ]
+      },
+      {
+        text: '数据与统计',
+        collapsed: true,
+        items: [
+          { text: '备份与迁移', link: '/guide/backup' },
+          { text: '用量统计与设备诊断', link: '/guide/stats' }
+        ]
+      },
+      {
+        text: '安全与排障',
+        collapsed: true,
+        items: [
+          { text: '安全实践', link: '/guide/security' },
+          { text: '常见问题排查', link: '/guide/troubleshooting' }
+        ]
+      },
+      {
+        text: '实战与附录',
+        collapsed: true,
+        items: [
+          { text: '实战工作流', link: '/guide/workflows' },
+          { text: '附录', link: '/guide/appendix' }
+        ]
+      }
     ]
   },
   {
     text: '工具参考',
+    collapsed: true,
     items: [
       { text: '文件与目录', link: '/reference/files' },
       { text: '命令执行', link: '/reference/commands' },
@@ -31,6 +110,7 @@ const zhSidebar = [
   },
   {
     text: '其他',
+    collapsed: true,
     items: [{ text: '更新日志', link: '/changelog' }]
   }
 ]
@@ -38,21 +118,99 @@ const zhSidebar = [
 const enSidebar = [
   {
     text: 'Guide',
+    collapsed: true,
     items: [
-      { text: 'Introduction & Setup', link: '/en/guide/intro' },
-      { text: 'Interface & Models', link: '/en/guide/interface-models' },
-      { text: 'Agent Tools', link: '/en/guide/agent-tools' },
-      { text: 'Files & Commands', link: '/en/guide/files-commands' },
-      { text: 'Remote Integrations', link: '/en/guide/remote' },
-      { text: 'Mini Server & Skills', link: '/en/guide/server-skills' },
-      { text: 'Memory, Tasks & Backup', link: '/en/guide/memory-tasks-backup' },
-      { text: 'Stats, Diagnostics & Media', link: '/en/guide/stats-media' },
-      { text: 'Security & Troubleshooting', link: '/en/guide/security-troubleshooting' },
-      { text: 'Workflows & Appendix', link: '/en/guide/workflows-appendix' }
+      {
+        text: 'Getting Started',
+        collapsed: true,
+        items: [
+          { text: 'Introduction & Concepts', link: '/en/guide/intro' },
+          { text: 'Installation & Setup', link: '/en/guide/install' },
+          { text: 'Quick Start', link: '/en/guide/quick-start' }
+        ]
+      },
+      {
+        text: 'Interface & Chat',
+        collapsed: true,
+        items: [
+          { text: 'Interface Overview', link: '/en/guide/interface' },
+          { text: 'Chat Basics', link: '/en/guide/chat' },
+          { text: 'Managing Conversations', link: '/en/guide/chat-management' },
+          { text: 'Multimodal & Rendering', link: '/en/guide/media' },
+          { text: 'Personalization & Themes', link: '/en/guide/personalization' }
+        ]
+      },
+      {
+        text: 'Model Setup',
+        collapsed: true,
+        items: [
+          { text: 'Models & Providers', link: '/en/guide/models' },
+          { text: 'Advanced Model Settings', link: '/en/guide/model-config' },
+          { text: 'Sub-Agent Orchestration', link: '/en/guide/sub-agents' }
+        ]
+      },
+      {
+        text: 'Agent Capabilities',
+        collapsed: true,
+        items: [
+          { text: 'Agent Tools', link: '/en/guide/agent-tools' },
+          { text: 'Files & Code Editing', link: '/en/guide/files' },
+          { text: 'Running Commands', link: '/en/guide/commands' }
+        ]
+      },
+      {
+        text: 'Remote & Network',
+        collapsed: true,
+        items: [
+          { text: 'Remote Services', link: '/en/guide/remote' },
+          { text: 'MCP', link: '/en/guide/mcp' }
+        ]
+      },
+      {
+        text: 'Local Services & Automation',
+        collapsed: true,
+        items: [
+          { text: 'Mini Server', link: '/en/guide/mini-server' },
+          { text: 'Scheduled & Background Tasks', link: '/en/guide/scheduled-tasks' }
+        ]
+      },
+      {
+        text: 'AI Extensions',
+        collapsed: true,
+        items: [
+          { text: 'Skills', link: '/en/guide/skills' },
+          { text: 'Memory & Instructions', link: '/en/guide/memory' }
+        ]
+      },
+      {
+        text: 'Data & Statistics',
+        collapsed: true,
+        items: [
+          { text: 'Backup & Migration', link: '/en/guide/backup' },
+          { text: 'Usage Stats & Device Diagnostics', link: '/en/guide/stats' }
+        ]
+      },
+      {
+        text: 'Security & Troubleshooting',
+        collapsed: true,
+        items: [
+          { text: 'Security Practices', link: '/en/guide/security' },
+          { text: 'Troubleshooting', link: '/en/guide/troubleshooting' }
+        ]
+      },
+      {
+        text: 'Workflows & Appendix',
+        collapsed: true,
+        items: [
+          { text: 'Workflow Examples', link: '/en/guide/workflows' },
+          { text: 'Appendix', link: '/en/guide/appendix' }
+        ]
+      }
     ]
   },
   {
     text: 'Reference',
+    collapsed: true,
     items: [
       { text: 'Files & Directories', link: '/en/reference/files' },
       { text: 'Commands', link: '/en/reference/commands' },
@@ -63,6 +221,7 @@ const enSidebar = [
   },
   {
     text: 'Other',
+    collapsed: true,
     items: [{ text: 'Changelog', link: '/en/changelog' }]
   }
 ]
@@ -94,7 +253,7 @@ export default defineConfig({
         ],
         sidebar: zhSidebar,
         outline: { level: [2, 3], label: '本页目录' },
-        footer: { message: 'AGPLv3-or-later', copyright: 'Lyra Code 使用文档' },
+        footer: { message: 'AGPLv3', copyright: 'Lyra Code 使用文档' },
         docFooter: { prev: '上一页', next: '下一页' },
         lastUpdated: { text: '最后更新时间', formatOptions: { dateStyle: 'medium', timeStyle: 'short' } },
         editLink: { pattern: 'https://github.com/lyracode-app/LyraCode-Docs/edit/main/docs/:path', text: '在 GitHub 上编辑此页' },
@@ -114,7 +273,7 @@ export default defineConfig({
         ],
         sidebar: enSidebar,
         outline: { level: [2, 3], label: 'On this page' },
-        footer: { message: 'AGPLv3-or-later', copyright: 'Lyra Code Documentation' },
+        footer: { message: 'AGPLv3', copyright: 'Lyra Code Documentation' },
         docFooter: { prev: 'Previous', next: 'Next' },
         lastUpdated: { text: 'Last updated', formatOptions: { dateStyle: 'medium', timeStyle: 'short' } },
         editLink: { pattern: 'https://github.com/lyracode-app/LyraCode-Docs/edit/main/docs/:path', text: 'Edit this page on GitHub' },
