@@ -7,16 +7,16 @@ const zhSidebar = [
   {
     text: '使用指南',
     items: [
-      { text: '简介与安装', link: '/guide/01-简介与安装' },
-      { text: '界面与模型', link: '/guide/02-界面与模型' },
-      { text: 'Agent 工具', link: '/guide/03-Agent工具' },
-      { text: '文件操作与命令执行', link: '/guide/04-文件与命令' },
-      { text: '远程集成', link: '/guide/05-远程集成' },
-      { text: '微型服务器与 Skills', link: '/guide/06-服务器与Skills' },
-      { text: '记忆、定时任务与备份', link: '/guide/07-记忆任务与备份' },
-      { text: '统计、诊断与多模态', link: '/guide/08-统计与多模态' },
-      { text: '安全与排障', link: '/guide/09-安全与排障' },
-      { text: '高级工作流与附录', link: '/guide/10-高级工作流与附录' }
+      { text: '简介与安装', link: '/guide/intro' },
+      { text: '界面与模型', link: '/guide/interface-models' },
+      { text: 'Agent 工具', link: '/guide/agent-tools' },
+      { text: '文件操作与命令执行', link: '/guide/files-commands' },
+      { text: '远程集成', link: '/guide/remote' },
+      { text: '微型服务器与 Skills', link: '/guide/server-skills' },
+      { text: '记忆、定时任务与备份', link: '/guide/memory-tasks-backup' },
+      { text: '统计、诊断与多模态', link: '/guide/stats-media' },
+      { text: '安全与排障', link: '/guide/security-troubleshooting' },
+      { text: '高级工作流与附录', link: '/guide/workflows-appendix' }
     ]
   },
   {
@@ -39,16 +39,16 @@ const enSidebar = [
   {
     text: 'Guide',
     items: [
-      { text: 'Introduction & Setup', link: '/en/guide/01-intro' },
-      { text: 'Interface & Models', link: '/en/guide/02-interface-models' },
-      { text: 'Agent Tools', link: '/en/guide/03-agent-tools' },
-      { text: 'Files & Commands', link: '/en/guide/04-files-commands' },
-      { text: 'Remote Integrations', link: '/en/guide/05-remote' },
-      { text: 'Mini Server & Skills', link: '/en/guide/06-server-skills' },
-      { text: 'Memory, Tasks & Backup', link: '/en/guide/07-memory-tasks-backup' },
-      { text: 'Stats, Diagnostics & Media', link: '/en/guide/08-stats-media' },
-      { text: 'Security & Troubleshooting', link: '/en/guide/09-security-troubleshooting' },
-      { text: 'Workflows & Appendix', link: '/en/guide/10-workflows-appendix' }
+      { text: 'Introduction & Setup', link: '/en/guide/intro' },
+      { text: 'Interface & Models', link: '/en/guide/interface-models' },
+      { text: 'Agent Tools', link: '/en/guide/agent-tools' },
+      { text: 'Files & Commands', link: '/en/guide/files-commands' },
+      { text: 'Remote Integrations', link: '/en/guide/remote' },
+      { text: 'Mini Server & Skills', link: '/en/guide/server-skills' },
+      { text: 'Memory, Tasks & Backup', link: '/en/guide/memory-tasks-backup' },
+      { text: 'Stats, Diagnostics & Media', link: '/en/guide/stats-media' },
+      { text: 'Security & Troubleshooting', link: '/en/guide/security-troubleshooting' },
+      { text: 'Workflows & Appendix', link: '/en/guide/workflows-appendix' }
     ]
   },
   {
@@ -89,15 +89,8 @@ export default defineConfig({
       link: '/',
       themeConfig: {
         nav: [
-          { text: '指南', link: '/guide/01-简介与安装' },
-          { text: '更新日志', link: '/changelog' },
-          {
-            text: '语言',
-            items: [
-              { text: '简体中文', link: '/' },
-              { text: 'English', link: '/en/' }
-            ]
-          }
+          { text: '指南', link: '/guide/intro' },
+          { text: '更新日志', link: '/changelog' }
         ],
         sidebar: zhSidebar,
         outline: { level: [2, 3], label: '本页目录' },
@@ -116,15 +109,8 @@ export default defineConfig({
       link: '/en/',
       themeConfig: {
         nav: [
-          { text: 'Guide', link: '/en/guide/01-intro' },
-          { text: 'Changelog', link: '/en/changelog' },
-          {
-            text: 'Language',
-            items: [
-              { text: '简体中文', link: '/' },
-              { text: 'English', link: '/en/' }
-            ]
-          }
+          { text: 'Guide', link: '/en/guide/intro' },
+          { text: 'Changelog', link: '/en/changelog' }
         ],
         sidebar: enSidebar,
         outline: { level: [2, 3], label: 'On this page' },

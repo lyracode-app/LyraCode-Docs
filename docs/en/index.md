@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Start Reading
-      link: /en/guide/01-intro
+      link: /en/guide/intro
     - theme: alt
       text: GitHub Repository
       link: https://github.com/lyracode-app/Lyra-Code

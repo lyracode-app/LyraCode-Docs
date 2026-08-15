@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读
-      link: /guide/01-简介与安装
+      link: /guide/intro
     - theme: alt
       text: 查看指南
       link: /guide/quick-start
