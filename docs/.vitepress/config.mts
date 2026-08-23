@@ -43,8 +43,9 @@ const zhSidebar = [
         collapsed: true,
         items: [
           { text: 'Agent 工具', link: '/guide/agent-tools' },
-          { text: '文件与代码编辑', link: '/guide/files' },
-          { text: '命令执行', link: '/guide/commands' }
+          { text: '文件管理与代码编辑', link: '/guide/files' },
+          { text: '命令执行', link: '/guide/commands' },
+          { text: 'PRoot Linux', link: '/guide/proot-linux' }
         ]
       },
       {
@@ -154,8 +155,9 @@ const enSidebar = [
         collapsed: true,
         items: [
           { text: 'Agent Tools', link: '/en/guide/agent-tools' },
-          { text: 'Files & Code Editing', link: '/en/guide/files' },
-          { text: 'Running Commands', link: '/en/guide/commands' }
+          { text: 'File Manager & Code Editor', link: '/en/guide/files' },
+          { text: 'Running Commands', link: '/en/guide/commands' },
+          { text: 'PRoot Linux', link: '/en/guide/proot-linux' }
         ]
       },
       {
@@ -255,7 +257,7 @@ export default defineConfig({
         outline: { level: [2, 3], label: '本页目录' },
         footer: { message: 'AGPLv3', copyright: 'Lyra Code 使用文档' },
         docFooter: { prev: '上一页', next: '下一页' },
-        lastUpdated: { text: '最后更新时间', formatOptions: { dateStyle: 'medium', timeStyle: 'short' } },
+        lastUpdated: { text: '最后更新时间' },
         editLink: { pattern: 'https://github.com/lyracode-app/LyraCode-Docs/edit/main/docs/:path', text: '在 GitHub 上编辑此页' },
         darkModeSwitchLabel: '主题',
         sidebarMenuLabel: '菜单',
@@ -275,7 +277,7 @@ export default defineConfig({
         outline: { level: [2, 3], label: 'On this page' },
         footer: { message: 'AGPLv3', copyright: 'Lyra Code Documentation' },
         docFooter: { prev: 'Previous', next: 'Next' },
-        lastUpdated: { text: 'Last updated', formatOptions: { dateStyle: 'medium', timeStyle: 'short' } },
+        lastUpdated: { text: 'Last updated' },
         editLink: { pattern: 'https://github.com/lyracode-app/LyraCode-Docs/edit/main/docs/:path', text: 'Edit this page on GitHub' },
         darkModeSwitchLabel: 'Appearance',
         sidebarMenuLabel: 'Menu',

@@ -7,6 +7,7 @@ title: 命令执行工具
 | 工具 | 身份 | 适用场景 | 前置条件 |
 | --- | --- | --- | --- |
 | run_command | Termux 应用用户 | 构建、Git、脚本、包管理、内容搜索 | Termux 已授权 |
+| proot_command | Lyra Code 应用内指定 Linux 环境 | Debian/Ubuntu/Alpine 包管理、Linux 脚本和工具 | 至少一个 PRoot 环境已安装并启用 |
 | execute_shell_command | Shizuku Shell（ADB 级别） | pm / cmd / dumpsys / 受保护路径 | Shizuku 已授权 |
 | execute_root_command | root（su） | 系统文件、/data、系统包管理 | 已 root 且配置 su |
 
@@ -30,6 +31,12 @@ title: 命令执行工具
 ## execute_shell_command
 
 通过 Shizuku 以 ADB 权限执行系统命令，常用于 `pm`、`cmd`、`dumpsys` 等。变更前先只读检查现场。
+
+## proot_command
+
+在 `linux_id` 指定的 PRoot Linux 环境中通过 `/bin/bash -lc` 或 `/bin/sh -lc` 执行。默认目录为 `/root`；有可直接访问的工作区时可使用 `/workspace`。取得“所有文件访问”权限后，还可通过 `/storage` 或 `/sdcard` 访问共享存储。它不是 Root，仍受 Android 应用 UID 和 SELinux 限制。
+
+安装、挂载、终端和限制见 [PRoot Linux](/guide/proot-linux)。
 
 ## execute_root_command
 

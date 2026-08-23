@@ -7,6 +7,7 @@ title: Command Execution
 | Tool | Identity | Use cases | Prerequisite |
 | --- | --- | --- | --- |
 | run_command | Termux app user | build, Git, scripts, package management, content search | Termux authorized |
+| proot_command | selected app-internal Linux environment | Linux packages, scripts, and tools | an enabled PRoot environment |
 | execute_shell_command | Shizuku shell (ADB level) | pm / cmd / dumpsys / protected paths | Shizuku authorized |
 | execute_root_command | root (su) | system files, /data, system packages | rooted with su configured |
 
@@ -30,6 +31,10 @@ Run non-interactive commands in Termux; returns exit_code / stdout / stderr.
 ## execute_shell_command
 
 Run system commands via Shizuku at ADB privilege, often `pm`, `cmd`, `dumpsys`. Inspect read-only first before making changes.
+
+## proot_command
+
+Runs through `/bin/bash -lc` or `/bin/sh -lc` in the environment selected by `linux_id`. The default directory is `/root`; a directly accessible workspace may be mounted at `/workspace`. With All files access, shared storage is available at `/storage` and `/sdcard`. This is not Root and remains subject to the Android app UID and SELinux. See [PRoot Linux](/en/guide/proot-linux).
 
 ## execute_root_command
 
