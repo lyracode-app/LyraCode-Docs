@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process'
 import { statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import type { PageData, TransformPageContext } from 'vitepress'
+import { sourceMarkdown } from './markdown-source'
 
 /**
  * 通过 git 记录获取每个页面的最后提交时间戳，
@@ -19,6 +20,8 @@ export async function transformPageData(
 
   const file = resolve(ctx.siteConfig.srcDir, pageData.filePath)
   const repoRoot = resolve(ctx.siteConfig.srcDir, '..')
+  // Encode raw HTML/script examples before VitePress embeds page data into a Vue SFC.
+  const frontmatter = { ...pageData.frontmatter, sourceMarkdownEncoded: encodeURIComponent(sourceMarkdown(file)) }
 
   // 通过 git log 获取该文件的最后提交时间戳（秒，需转为毫秒）
   try {
@@ -29,7 +32,7 @@ export async function transformPageData(
     )
     const timestamp = Number.parseInt(result.trim(), 10)
     if (Number.isFinite(timestamp) && timestamp > 0) {
-      return { lastUpdated: timestamp * 1000 }
+      return { frontmatter, lastUpdated: timestamp * 1000 }
     }
   } catch {
     // git 获取失败（文件未提交等），继续使用兜底逻辑
@@ -39,11 +42,12 @@ export async function transformPageData(
   try {
     const stat = statSync(file)
     return {
+      frontmatter,
       lastUpdated: Math.round(stat.mtimeMs),
     }
   } catch {
     // 忽略读取失败，保持原始值
   }
 
-  return {}
+  return { frontmatter }
 }

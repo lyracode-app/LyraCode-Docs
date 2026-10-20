@@ -1,0 +1,7 @@
+[pet]
+size = 96
+autoDock = true
+soundEnabled = false
+
+[controls]
+color = "#5b7cfa"
