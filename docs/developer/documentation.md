@@ -17,13 +17,15 @@ npm run docs:build
 npm run docs:preview
 ```
 
-`docs:build` 已包含结构检查。输出位于 `docs/.vitepress/dist/`。GitHub Pages 的子路径通过 `VITEPRESS_BASE` 注入；Windows 可这样构建：
+`docs:build` 包含结构检查与构建后资源路径检查。输出位于 `docs/.vitepress/dist/`。工作流从 GitHub Pages 配置读取 `base_path`，通过 `VITEPRESS_BASE` 注入。自定义域名使用根路径，Windows 可这样模拟：
 
 ```powershell
-$env:VITEPRESS_BASE = '/LyraCode-Docs/'
+$env:VITEPRESS_BASE = '/'
 npm run docs:build
 Remove-Item Env:VITEPRESS_BASE
 ```
+
+仅模拟默认项目站点 `https://lyracode-app.github.io/LyraCode-Docs/` 时才使用 `/LyraCode-Docs/`。`normalizeBase` 与构建产物检查共享路径规范化规则；`deployment.test.mjs` 覆盖根域名、项目子路径及错误仓库前缀，`check-build.mjs` 检查生成 HTML 的实际本地目标。
 
 ## 新增或修改页面
 
@@ -61,7 +63,13 @@ Remove-Item Env:VITEPRESS_BASE
 
 ### 部署文档站
 
+工作流的 Setup Pages 步骤设置 `id: pages`，构建路径读取 `steps.pages.outputs.base_path` 并补充末尾斜杠。自定义域名的 `base_path` 为空，项目站点则带仓库路径，避免切换域名后继续引用错误前缀。
+
 `.github/workflows/deploy.yml` 在推送 main 或手动触发时使用 Node 20、`npm ci` 和生产构建部署到 GitHub Pages。仓库 Pages Source 应配置为 GitHub Actions。修改本地文件不等于已经发布；提交、推送和部署按仓库维护流程执行。
+
+### 部署后只有文字、没有样式
+
+若 HTML 引用 `/LyraCode-Docs/assets/...css`，而 `docs.lyracode.app` 实际在 `/assets/` 提供文件，CSS、JS 和图片都会 404。核对仓库 Pages 自定义域名配置，将修复推送到 main 后重新构建部署；只重跑旧提交仍会生成错误路径。部署后检查首页与深层页面的 CSS/JS/图片返回 200，再刷新浏览器。
 
 页面内容的事实来源与重建范围记录在文档仓库根目录的 `DOCUMENTATION_PLAN.md`。
 

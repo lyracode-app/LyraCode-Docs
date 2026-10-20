@@ -37,6 +37,7 @@ jobs:
           cache: npm
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
@@ -45,7 +46,8 @@ jobs:
       - name: Build with VitePress
         run: npm run docs:build
         env:
-          VITEPRESS_BASE: /LyraCode-Docs/
+          # 自定义域名为 /；默认项目站点为 /<repository>/。
+          VITEPRESS_BASE: ${{ steps.pages.outputs.base_path }}/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
