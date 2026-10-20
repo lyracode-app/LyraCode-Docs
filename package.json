@@ -5,8 +5,9 @@
   "scripts": {
     "examples:pack": "node scripts/pack-examples.mjs",
     "docs:dev": "vitepress dev docs",
-    "docs:check": "node scripts/check-docs.mjs && node --test scripts/outline.test.mjs scripts/navigation.test.mjs scripts/releases.test.mjs",
-    "docs:build": "npm run docs:check && vitepress build docs",
+    "docs:check": "node scripts/check-docs.mjs && node --test scripts/outline.test.mjs scripts/navigation.test.mjs scripts/releases.test.mjs scripts/deployment.test.mjs",
+    "docs:check-build": "node scripts/check-build.mjs",
+    "docs:build": "npm run docs:check && vitepress build docs && npm run docs:check-build",
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
