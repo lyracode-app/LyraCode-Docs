@@ -47,6 +47,8 @@ docs/
     theme/                  主题与组件
 scripts/
   check-docs.mjs             内容和示例检查
+  check-build.mjs            构建后检查资源和页面部署路径
+  deployment.test.mjs        根域名与项目子路径回归
   navigation.test.mjs        分组深链接与语言导航回归
   releases.test.mjs          Release 缓存、回退、分页与 Markdown 回归
   pack-examples.mjs          无额外依赖的可重复 ZIP 打包
@@ -64,21 +66,23 @@ scripts/
 
 发布记录页在浏览器访问时通过 GitHub Releases API 获取应用版本，每页十条，五分钟缓存，支持失败回退、重试与加载更多。新 Release 无需重新构建文档；发布说明保留仓库原文。实现参考应用仓库 `web/releases.js` 与 `web/changelog.js`，运行时模块与构建流程独立，构建不会请求 GitHub。
 
-GitHub Actions 的 `.github/workflows/deploy.yml` 在推送 main 或手动运行时构建并部署。Pages Source 选择 GitHub Actions，部署 base 为 `/LyraCode-Docs/`，通过 `VITEPRESS_BASE` 注入。
+GitHub Actions 的 `.github/workflows/deploy.yml` 在推送 main 或手动运行时构建并部署。Pages Source 选择 GitHub Actions。工作流使用 `actions/configure-pages` 返回的 `base_path` 设置 `VITEPRESS_BASE`：自定义域名 `https://docs.lyracode.app/` 使用 `/`，默认项目站点才使用 `/LyraCode-Docs/`，不再写死仓库前缀。
 
-Windows 本地验证该子路径：
+Windows 本地模拟自定义域名的根路径：
 
 ```powershell
-$env:VITEPRESS_BASE = '/LyraCode-Docs/'
+$env:VITEPRESS_BASE = '/'
 npm run docs:build
 npm run docs:preview
 ```
 
-关闭预览后可用 `Remove-Item Env:VITEPRESS_BASE` 清除当前会话变量。
+关闭预览后可用 `Remove-Item Env:VITEPRESS_BASE` 清除当前会话变量。只有模拟默认项目地址时才将该值改为 `/LyraCode-Docs/`。构建结束会自动运行 `docs:check-build`，检查生成 HTML 中的 CSS、JS、图片、页面与旧路由目标是否在对应部署路径下存在。
+
+若线上只有文字且资源 404，先比较 HTML 中的资源前缀与实际站点路径。将修复提交推送到 main 触发新部署，不能只重新运行仍写死旧路径的历史提交。
 
 ## 仓库与许可
 
-[文档网站](https://lyracode-app.github.io/LyraCode-Docs/) · [应用源码](https://github.com/lyracode-app/Lyra-Code) · [文档源码](https://github.com/lyracode-app/LyraCode-Docs)
+[文档网站](https://docs.lyracode.app/) · [应用源码](https://github.com/lyracode-app/Lyra-Code) · [文档源码](https://github.com/lyracode-app/LyraCode-Docs)
 
 `vite_docs/` 是独立 Git 仓库。应用构建和文档构建在各自仓库根目录执行；文档修改不会自动提交或发布。
 

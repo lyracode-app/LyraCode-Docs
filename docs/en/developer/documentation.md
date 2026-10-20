@@ -17,13 +17,15 @@ npm run docs:build
 npm run docs:preview
 ```
 
-Build includes structural checks and outputs `docs/.vitepress/dist/`. GitHub Pages uses the `VITEPRESS_BASE` environment variable. On Windows:
+Build includes structural and generated-resource checks and outputs `docs/.vitepress/dist/`. The workflow derives `VITEPRESS_BASE` from GitHub Pages metadata. Custom domains use the domain root; simulate this on Windows:
 
 ```powershell
-$env:VITEPRESS_BASE = '/LyraCode-Docs/'
+$env:VITEPRESS_BASE = '/'
 npm run docs:build
 Remove-Item Env:VITEPRESS_BASE
 ```
+
+Use `/LyraCode-Docs/` only when simulating the default project site at `https://lyracode-app.github.io/LyraCode-Docs/`. Build configuration and checks share `normalizeBase`. `deployment.test.mjs` covers root/project paths and incorrect repository prefixes; `check-build.mjs` validates actual local targets in generated HTML.
 
 ## Edit or add pages
 
@@ -61,7 +63,13 @@ Builds do not contact GitHub, and application releases need no documentation reb
 
 ### Deploy documentation
 
+Setup Pages has `id: pages`; the build reads `steps.pages.outputs.base_path` and appends a trailing slash. Custom domains return an empty base path, while project sites include the repository path.
+
 `.github/workflows/deploy.yml` uses Node 20, `npm ci` and production build for main pushes or manual dispatch. Configure the repository's Pages Source to GitHub Actions. Local edits do not publish the site; commit, push and deploy through the repository workflow.
+
+### Deployed page has text but no styles
+
+If HTML references `/LyraCode-Docs/assets/...css` while `docs.lyracode.app` serves files under `/assets/`, CSS, JS and images return 404. Confirm the Pages custom-domain setting, push the corrected workflow to main and deploy a new build. Rerunning an old commit retains its incorrect configuration. Check resource responses on the homepage and nested pages, then refresh the browser.
 
 The root `DOCUMENTATION_PLAN.md` records the rewrite structure, scope and evidence sources.
 

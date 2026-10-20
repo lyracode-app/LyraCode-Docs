@@ -4,8 +4,9 @@ import { buildSidebar } from './navigation.mjs'
 import { transformPageData } from './last-updated'
 import { writeLegacyRedirects } from './legacy-redirects'
 import { articleActions } from './article-actions'
+import { normalizeBase } from '../../scripts/build-paths.mjs'
 
-const base = `/${(process.env.VITEPRESS_BASE || '').replace(/^\/+|\/+$/g, '')}/`.replace('//', '/')
+const base = normalizeBase(process.env.VITEPRESS_BASE)
 const sidebar = (english = false) => buildSidebar(navigation, english)
 const nav = (english = false) => [
   ...navigation.map(section => ({
