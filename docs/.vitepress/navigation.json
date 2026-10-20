@@ -1,0 +1,86 @@
+[
+  { "path": "manual", "zh": "使用手册", "en": "User manual", "items": [
+    ["index", "阅读路线与功能索引", "Reading paths and feature index"]
+  ], "groups": [
+    { "id": "start", "zh": "开始使用", "en": "Getting started", "items": [
+      ["quick-start", "完成第一个任务", "Your first task"],
+      ["interface", "界面与侧菜单栏", "Interface and sidebar"],
+      ["models", "模型与服务商", "Models and providers"],
+      ["accounts", "第三方账号", "Third-party accounts"]
+    ]},
+    { "id": "chat", "zh": "对话与任务", "en": "Conversations and tasks", "items": [
+      ["conversations", "发送消息与管理对话", "Messages and conversations"],
+      ["conversation-branches", "对话分支", "Conversation branches"],
+      ["conversation-navigation", "对话跳转与快捷手势", "Navigation and gestures"],
+      ["attachments", "附件与上下文压缩", "Attachments and context"],
+      ["review", "工具审批与变更审查", "Approvals and change review"],
+      ["sub-agents", "子代理协作", "Sub-agents"],
+      ["archive", "归档与恢复", "Archive and restore"]
+    ]},
+    { "id": "workspace", "zh": "文件与运行环境", "en": "Files and runtimes", "items": [
+      ["workspaces", "选择与切换工作区", "Select a workspace"],
+      ["files", "侧栏文件与双栏管理", "Sidebar files and dual panes"],
+      ["editor", "代码编辑器", "Code editor"],
+      ["commands", "PRoot、Termux 与命令", "PRoot, Termux and commands"],
+      ["local-services", "项目预览与网页访问", "Preview and web access"]
+    ]},
+    { "id": "services", "zh": "连接与服务", "en": "Connections and services", "items": [
+      ["integrations", "服务选择与连接检查", "Choose and check services"],
+      ["mcp-client", "MCP 客户端", "MCP client"],
+      ["mcp-server", "MCP 服务端", "MCP server"],
+      ["remote-services", "SSH 与远程文件传输", "SSH and remote files"],
+      ["email", "邮件账号与附件", "Email and attachments"]
+    ]},
+    { "id": "automation", "zh": "自动化与个性化", "en": "Automation and customization", "items": [
+      ["automation", "定时与后台任务", "Scheduled and background tasks"],
+      ["skills", "Skills 导入与使用", "Import and use Skills"],
+      ["memory", "自定义指令与记忆", "Instructions and memory"],
+      ["customization", "外观与内容显示", "Appearance and rendering"],
+      ["device-interaction", "设备交互与桌宠", "Device interaction and pets"]
+    ]},
+    { "id": "maintenance", "zh": "日志、统计与数据", "en": "Logs, statistics and data", "items": [
+      ["logs", "日志与请求排查", "Logs and request diagnosis"],
+      ["statistics", "统计与 Token 用量", "Statistics and token usage"],
+      ["data", "备份与迁移", "Backup and migration"]
+    ]}
+  ]},
+  { "path": "developer", "zh": "开发指南", "en": "Developer guide", "items": [
+    ["index", "开发者入口与源码索引", "Developer entry and source map"]
+  ], "groups": [
+    { "id": "foundation", "zh": "工程与架构", "en": "Project and architecture", "items": [
+      ["build", "从源码构建", "Build from source"],
+      ["architecture", "架构与请求链路", "Architecture and request flow"],
+      ["modules", "模块职责与依赖", "Modules and dependencies"],
+      ["conversation-lifecycle", "会话与请求生命周期", "Conversation and request lifecycle"],
+      ["hooks", "回调、钩子与作用域接口", "Callbacks, hooks and scopes"],
+      ["persistence", "数据模型与持久化", "Data models and persistence"]
+    ]},
+    { "id": "implementation", "zh": "核心能力实现", "en": "Core implementation", "items": [
+      ["agent-tools", "工具契约与接入示例", "Tool contracts and integration"],
+      ["providers", "模型协议与流式适配", "Providers and streaming"],
+      ["workspaces", "工作区与运行时接口", "Workspace and runtime APIs"],
+      ["mcp", "MCP 协议、客户端与服务端", "MCP protocol, client and server"],
+      ["web-access", "网页桥接与状态同步", "Web bridge and state sync"]
+    ]},
+    { "id": "extensions", "zh": "扩展与验证", "en": "Extensions and validation", "items": [
+      ["extensions", "扩展方式与 Skill 加载", "Extensions and Skill loading"],
+      ["pet-runtime", "桌宠模块与生命周期钩子", "Pet modules and lifecycle hooks"],
+      ["testing", "测试与调试", "Testing and debugging"],
+      ["documentation", "维护文档与导航", "Maintain docs and navigation"]
+    ]}
+  ]},
+  { "path": "examples", "zh": "实战示例", "en": "Examples", "items": [
+    ["index", "选择一个示例", "Choose an example"],
+    ["static-site", "创建并预览静态网页", "Preview a static site"],
+    ["project-repair", "修复项目中的问题", "Repair a project"],
+    ["skill", "编写可导入的 Skill", "Write an importable Skill"],
+    ["mcp", "连接 HTTP MCP 服务", "Connect an HTTP MCP service"],
+    ["pet", "编写 API 2 桌宠", "Build an API 2 pet"]
+  ]},
+  { "path": "reference", "zh": "参考资料", "en": "Reference", "items": [
+    ["index", "索引与事实来源", "Index and source of truth"],
+    ["tools", "工具与参数速查", "Tools and arguments"],
+    ["permissions", "权限与数据范围", "Permissions and data scope"],
+    ["troubleshooting", "按现象排查问题", "Troubleshooting by symptom"]
+  ]}
+]

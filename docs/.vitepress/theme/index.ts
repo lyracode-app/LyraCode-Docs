@@ -1,28 +1,16 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
-import { h } from 'vue'
-import DownloadSection from './components/DownloadSection.vue'
+import { defineAsyncComponent } from 'vue'
 import './custom.css'
-import ScrollProgress from './components/ScrollProgress.vue'
-import RevealOnScroll from './components/RevealOnScroll.vue'
-import PageTitle from './components/PageTitle.vue'
-import LanguageSwitcher from './components/LanguageSwitcher.vue'
-import NumericLastUpdated from './components/NumericLastUpdated.vue'
-import ReleaseNotes from './components/ReleaseNotes.vue'
+import DocsLayout from './components/DocsLayout.vue'
+import ArticleActions from './components/ArticleActions.vue'
 
 const theme: Theme = {
   extends: DefaultTheme,
-  Layout() {
-    return h(DefaultTheme.Layout, null, {
-      'layout-top': () => [h(ScrollProgress), h(RevealOnScroll)],
-      'nav-screen-content-after': () => h(LanguageSwitcher, { screen: true }),
-      'doc-before': () => h(PageTitle),
-      'doc-footer-before': () => h(NumericLastUpdated)
-    })
-  },
+  Layout: DocsLayout,
   enhanceApp({ app }) {
-    app.component('DownloadSection', DownloadSection)
-    app.component('ReleaseNotes', ReleaseNotes)
+    app.component('ArticleActions', ArticleActions)
+    app.component('ReleaseNotes', defineAsyncComponent(() => import('./components/ReleaseNotes.vue')))
   }
 }
 

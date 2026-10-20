@@ -1,0 +1,12 @@
+{
+  "apiVersion": 2,
+  "id": "lyra.docs.status-orb",
+  "name": "Status Orb",
+  "version": "1.0.0",
+  "author": "Lyra Code documentation",
+  "entry": "scripts/main.js",
+  "config": "config.toml",
+  "controls": [
+    { "key": "color", "label": "Color / 颜色", "type": "color", "default": "#5b7cfa" }
+  ]
+}

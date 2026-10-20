@@ -1,46 +1,53 @@
 ---
 layout: home
-
 hero:
-  name: "Lyra Code"
-  text: "Android Local AI Agent · User Guide"
-  tagline: "A detailed, advanced guide to the Android-first local AI Agent app"
+  name: Lyra Code
+  text: Build projects on Android
+  tagline: From your first conversation to workspace edits, Linux commands and application extensions.
   image:
     src: /img/logo-256.png
     alt: Lyra Code
   actions:
     - theme: brand
-      text: Start Reading
-      link: /en/guide/intro
+      text: Get started
+      link: /en/manual/quick-start
     - theme: alt
-      text: GitHub Repository
-      link: https://github.com/lyracode-app/Lyra-Code
-
+      text: Developer guide
+      link: /en/developer/
+    - theme: alt
+      text: Try an example
+      link: /en/examples/
 features:
-  - icon:
-      src: /img/icons/cellphone.svg
-      alt: Local First
-    title: Local First
-    details: Model keys, conversations, files and credentials stay on your device — no third-party relay
-  - icon:
-      src: /img/icons/robot.svg
-      alt: Agentic
-    title: Agentic
-    details: The AI reads files, edits code, runs commands and operates remote servers — every action is approved and auditable
-  - icon:
-      src: /img/icons/plug.svg
-      alt: Remote Integration
-    title: Remote Integration
-    details: SSH, email (IMAP/SMTP), WebDAV, FTP/FTPS/SFTP, and MCP client & server
-  - icon:
-      src: /img/icons/puzzle.svg
-      alt: Extensible
-    title: Extensible
-    details: Skills packages, scheduled tasks, built-in mini server, and offline usage stats
+  - title: User manual
+    details: Connect models, manage conversations and files, configure Linux and external services.
+    link: /en/manual/
+  - title: Developer guide
+    details: Build the app, follow the request flow, add tools, integrate providers and verify changes.
+    link: /en/developer/
+  - title: Examples
+    details: Complete static site, project repair workflow, Skill, MCP configuration and API 2 pet.
+    link: /en/examples/
+  - title: Reference
+    details: Look up tool arguments, permission scopes and troubleshooting steps.
+    link: /en/reference/
 ---
 
-## About This Guide
+## Complete one small task
 
-This guide is written from the official Lyra Code README and the built-in Agent tool contracts. It covers installation and setup, the Agent tool system, file and code editing, command execution, remote integrations, the mini server, Skills, memory and sub-agents, scheduled tasks, backup and migration, usage stats, security practices, and troubleshooting.
+1. [Download the app](/en/download) and connect a working [model provider](/en/manual/models).
+2. Select an empty directory as your [workspace](/en/manual/workspaces).
+3. Ask the Agent to create and read back a file, then review the change in [your first task](/en/manual/quick-start).
 
-UI details may vary by version. See the official [README](https://github.com/lyracode-app/Lyra-Code/blob/main/README.md) for the latest. Switch to the Chinese version using the language selector at the top right.
+Configure [PRoot or Termux](/en/manual/commands) when you need builds, tests or a development server. Conversations, native file operations and static previews do not require Termux.
+
+## Choose a path
+
+| Goal | Start here |
+| --- | --- |
+| Edit and verify a project on your phone | [Workspaces](/en/manual/workspaces) → [Project repair](/en/examples/project-repair) |
+| Run Linux development tools | [PRoot, Termux and commands](/en/manual/commands) |
+| Continue phone conversations in a computer browser | [Preview and web access](/en/manual/local-services) |
+| Build or modify Lyra Code itself | [Build](/en/developer/build) → [Architecture](/en/developer/architecture) |
+| Create a Skill, integration or pet | [Extensions](/en/developer/extensions) → [Examples](/en/examples/) |
+
+Documentation follows the current source. Compare your installed build with [release notes](/en/changelog) when features differ, and use [troubleshooting](/en/reference/troubleshooting) to diagnose failures.

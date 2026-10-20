@@ -41,3 +41,4 @@ Thumbs.db
 
 # 压缩包
 *.zip
+!docs/public/examples/*.zip

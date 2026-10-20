@@ -1,37 +1,29 @@
-# 下载
+# 下载与安装
 
-## 最新版本
+目标：安装 Lyra Code，并保留后续升级所需的数据。
 
-<DownloadSection />
+## 获取安装包
 
-## 安装说明
-
-1. 点击上方按钮下载 APK 安装包。
-2. 在 Android 设备上打开下载的 APK 文件。
-3. 若系统提示「未知来源」或「安全提示」，请允许安装来自此来源的应用。
-4. 完成安装后，从桌面启动 Lyra Code。
-
-### 安装被拦截？
-
-本应用**不存在恶意代码**。如果安装器反馈**病毒拦截**，请截图详细内容反馈给开发者；中国大陆设备反馈**无备案**是正常的，允许安装即可。非国行设备可能遭遇 Google Play 安全框架的侧载拦截，详细处理方式见[安装与配置 - 安装受限怎么办](/guide/install#_2-3-安装受限怎么办)。
-
-你还可以使用 **ADB 命令直接安装**，绕过系统安装器，无论是国行还是非国行设备：
-
-```
-adb install -r lyra-code.apk
-```
-
-## 历史版本
-
-历史版本可通过以下渠道查看与下载：
+从项目发布页选择适合设备的 APK，阅读该版本说明后下载。发布页未提供的构建或功能，不应以文档推断为已发布。
 
 - [GitHub Releases](https://github.com/lyracode-app/Lyra-Code/releases)
 - [Gitee Releases](https://gitee.com/yukisoffd/lyra-code/releases)
 
-## 从源码构建
+应用最低支持 Android 8.0（API 26）。模型接口通常需要网络、对应账号和可用额度；Linux rootfs 与项目依赖还需要额外存储空间。PRoot 支持情况取决于 APK 内运行时与设备架构的匹配。
 
-如果你希望自行编译安装包，可以阅读[构建指南](/build)，从源码构建 Lyra Code。
+## 安装和验证
 
-::: warning 注意
-本应用**完全开源免费**，切勿相信付费提供安装包的渠道。如果你需要安装社区提供的修改版或衍生二改应用，请核对应用来源是否安全可信，避免安装包含恶意代码的软件。
-:::
+1. 打开下载的 APK，按系统提示允许当前来源安装应用。
+2. 启动应用，阅读首次使用说明。
+3. 进入设置，添加模型配置并完成一次简短对话。
+4. 按[快速上手](/manual/quick-start)验证工作区读写。
+
+只授予当前功能需要的权限。普通聊天无需先开启无障碍、Shizuku 或 Root。相关对应关系见[权限表](/reference/permissions)。
+
+## 更新与切换构建
+
+同包名且签名兼容的更新通常可保留应用数据；安装失败时先检查包名、签名和系统版本。Debug 使用 `.debug` 包名后缀，Beta 使用 `.beta`，它们与正式版的数据目录独立。
+
+升级或更换构建前先[导出备份](/manual/data)。卸载或清除应用数据会删除应用私有的聊天、配置和 Linux 环境。应用备份不包含完整 rootfs，也不替代项目文件备份。
+
+如需自行构建，阅读[从源码构建](/developer/build)。应用原创代码依据 AGPLv3 开源；第三方组件遵循各自许可，详情见源码仓库的 [LICENSE](https://github.com/lyracode-app/Lyra-Code/blob/main/LICENSE) 与 [THIRD_PARTY_NOTICES.md](https://github.com/lyracode-app/Lyra-Code/blob/main/THIRD_PARTY_NOTICES.md)。
