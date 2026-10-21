@@ -4,7 +4,7 @@
 
 ## 添加配置
 
-需要同步梦汐 API 平台的 Key 与模型列表时，看[第三方账号](/manual/accounts)；手动配置服务商可直接继续以下步骤。
+需要同步梦汐 API 的 Key 与模型列表，或使用 ChatGPT 订阅时，看[第三方账号](/manual/accounts)。ChatGPT 账户服务通过登录同步，无需填写 API Key；其他服务商可继续以下手动配置步骤。
 
 1. 在设置的模型/服务商管理中添加配置，给它起一个可辨认的名称。
 2. 选择匹配的协议。应用包含 OpenAI 兼容接口、Anthropic 和 Gemini 请求路径；兼容接口也可能区分 Chat Completions 与 Responses。
