@@ -1,6 +1,6 @@
 # Models and providers
 
-To synchronize Mengxi API keys/models, see [third-party accounts](/en/manual/accounts). Manual provider setup can follow the steps below.
+To synchronize Mengxi API keys/models or use a ChatGPT subscription, see [third-party accounts](/en/manual/accounts). ChatGPT account services are synchronized through sign-in without an API key. Other providers can follow the manual setup below.
 
 Goal: connect a model and verify the capabilities needed by your task. Prepare the provider's API endpoint, key and exact model ID.
 
