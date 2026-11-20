@@ -24,7 +24,7 @@ Check the resulting provider configuration, select a model and send a small requ
 
 ### Quota and requests
 
-Refresh account details for remaining quota, used quota and request count returned by the platform. Sidebar [statistics](/en/manual/statistics) use local records and can have a different scope. An unlimited key remains constrained by the account's actual balance.
+The account page shows the balance, amount spent and request count. Monetary amounts use the site's conversion settings and show a dash when those settings are unavailable. Sidebar [statistics](/en/manual/statistics) use local records and can have a different scope. An unlimited key remains constrained by the account's actual balance.
 
 ### Sign out, backup and data scope
 
