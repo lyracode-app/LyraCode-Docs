@@ -2,6 +2,24 @@
 
 Goal: locate the right layer for a change by following one task. The main Android `app` module uses Kotlin and Jetpack Compose; `third_party/jlatexmath` is included as a library module.
 
+![Lyra Code layered architecture](./architecture-en.svg)
+
+## Layered view
+
+The diagram follows call direction: entries reach orchestration and the Agent, which dispatches into tools and capabilities; the data layer records results and the platform layer supplies real execution. Dashed boxes are systems outside the app.
+
+| Layer | Main source | Responsibility |
+| --- | --- | --- |
+| Entry | `ui/app/`, `ui/chat/`, `ui/settings/`, `webaccess/`, `interaction/overlay/` | Compose screens, web entry, floating window, pets and notifications |
+| Orchestration | `ChatRuntime.kt`, `ChatController.kt`, `ConversationRunLifecycle.kt` | Process wiring, user actions, waiters and run lifecycle |
+| Agent core | `ai/agent/OpenAiAgent.kt`, `AgentToolSchemaFactory.kt`, `SubAgent*` | Request loop, tool dispatch, approvals and sub-agents |
+| Model access | `ai/` (interceptors, audit, cache), `ProviderCatalog.kt` | Protocol adapters, credential injection, retry, response cache |
+| Tools and capabilities | `ai/agent/Agent*Handler`, `workspace/`, `termux/`, `ssh/`, `system/`, `mcp/`, `server/`, `email/`, `webdav/`, `filetransfer/`, `interaction/`, `:lyra_x11` | Tool implementations and executors, with permission checks at call time |
+| Data and state | `data/ConversationStore.kt`, `data/settings/`, `BackupManager.kt`, `AuditLogStore.kt`, `UsageStatistics.kt` | Conversations, branches, settings, backup, audit and usage |
+| Platform and external | `app/src/debianRuntime/`, `:lyra_x11`, Android permissions and foreground services | PRoot runtime, GUI sessions, system capabilities and remote services |
+
+One feature usually spans several layers: reading a workspace file is triggered by the entry layer, dispatched by the Agent, executed by `AgentFileToolHandler` with `NativeFileManager`, and recorded through `ConversationStore`. Changes belong in the matching layer rather than performing IO directly in the UI.
+
 ## Request flow
 
 ```text

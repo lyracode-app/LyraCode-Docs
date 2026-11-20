@@ -38,6 +38,7 @@ Exact editing uses `old_content`/`new_content` or matching `_lines` arrays. The 
 | --- | --- |
 | `proot_command` | Required `linux_id`; command through `command` or `command_lines`; optional `workDir`, `timeout_seconds`, `background` |
 | `run_command` | External Termux; same command/options without `linux_id` |
+| `linux_gui` | PRoot GUI sessions; `action` is `guide`, `list`, `start`, `status`, `show`, `hide`, `stop`, `screenshot` or `request_overlay_permission`; `start` needs `linux_id` and accepts `app_command`, `preset`, `mode`, `width`, `height`, `fps`, `display_backend` |
 | `ssh_exec` | Configured SSH machine; obtain a real ID from `list_ssh_servers` first |
 | `execute_shell_command` | Requires actual Shizuku Shell capability |
 | `execute_root_command` | Requires configured and working Root execution |

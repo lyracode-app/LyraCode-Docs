@@ -16,7 +16,7 @@ Use PRoot or Termux for ordinary project development. PRoot shares Android's ker
 1. Open Settings > PRoot Linux and download the provided Debian image or import a compatible rootfs.
 2. Import tar, tar.gz or tgz containing `/bin/sh` or `/bin/bash`. ISOs cannot be imported directly; decompress xz/zstd archives into a supported format first.
 3. Match rootfs to the installed runtime. Current source contains arm64-v8a and x86_64 engines without cross-architecture emulation; use the app's architecture result.
-4. Enable the instance, note its Linux ID and select it in the terminal. Each environment has a separate persistent terminal session.
+4. Enable the instance, note its Linux ID and select it in the [terminal](/en/manual/terminal). Each environment has a separate persistent terminal session.
 5. Run `pwd` and `uname -m`, then inspect the project. An accessible selected workspace appears at `/workspace`; without one the default is `/root`.
 
 ```sh
@@ -25,6 +25,8 @@ printf 'Linux shell is ready\n'
 ```
 
 **Success:** terminal output is correct and an Agent call using the same Linux ID sees the intended files. Install dependencies with the imported distribution's package manager.
+
+For a graphical environment, a desktop or a single GUI program can also run without SSH: enable the environment in PRoot Linux settings and tap that row's desktop icon, or let the AI call `linux_gui`. Dependency install, display backends, floating windows and screenshots are covered in [Linux GUI desktops](/en/manual/linux-gui).
 
 With All files access, shared storage can appear at `/storage` and primary storage at `/sdcard`. Reconnect existing terminals after permission changes. Disabling or deleting an environment stops its retained processes; uninstalling or clearing app data removes its rootfs.
 

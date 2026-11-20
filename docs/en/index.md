@@ -46,6 +46,8 @@ Configure [PRoot or Termux](/en/manual/commands) when you need builds, tests or 
 | --- | --- |
 | Edit and verify a project on your phone | [Workspaces](/en/manual/workspaces) → [Project repair](/en/examples/project-repair) |
 | Run Linux development tools | [PRoot, Termux and commands](/en/manual/commands) |
+| Type local Linux or SSH commands on the phone | [Terminal: local and SSH](/en/manual/terminal) |
+| Run a Linux desktop or GUI program | [Linux GUI desktops](/en/manual/linux-gui) |
 | Continue phone conversations in a computer browser | [Preview and web access](/en/manual/local-services) |
 | Build or modify Lyra Code itself | [Build](/en/developer/build) → [Architecture](/en/developer/architecture) |
 | Create a Skill, integration or pet | [Extensions](/en/developer/extensions) → [Examples](/en/examples/) |
