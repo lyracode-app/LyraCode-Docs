@@ -2,6 +2,24 @@
 
 目标：沿一次用户任务找到正确修改层。应用主体是 Kotlin/Jetpack Compose 的 Android `app` 模块；`third_party/jlatexmath` 作为库模块参与构建。
 
+![Lyra Code 分层架构图](./architecture-zh.svg)
+
+## 分层视图
+
+上图按调用方向分层。箭头从入口指向编排与 Agent，再分派到工具与能力层；数据层记录结果，平台层提供实际执行能力。虚线框属于应用之外的系统。
+
+| 层 | 主要源码 | 负责什么 |
+| --- | --- | --- |
+| 入口层 | `ui/app/`、`ui/chat/`、`ui/settings/`、`webaccess/`、`interaction/overlay/` | Compose 页面、网页入口、悬浮窗、桌宠与通知 |
+| 编排层 | `ChatRuntime.kt`、`ChatController.kt`、`ConversationRunLifecycle.kt` | 进程装配、用户动作、等待器与运行生命周期 |
+| Agent 内核 | `ai/agent/OpenAiAgent.kt`、`AgentToolSchemaFactory.kt`、`SubAgent*` | 请求循环、工具分派、审批与子代理 |
+| 模型接入 | `ai/`（拦截器、审计、缓存）、`ProviderCatalog.kt` | 协议适配、凭证注入、重试、响应缓存 |
+| 工具与能力层 | `ai/agent/Agent*Handler`、`workspace/`、`termux/`、`ssh/`、`system/`、`mcp/`、`server/`、`email/`、`webdav/`、`filetransfer/`、`interaction/`、`:lyra_x11` | 工具实现与各执行器，调用时仍检查权限 |
+| 数据与状态 | `data/ConversationStore.kt`、`data/settings/`、`BackupManager.kt`、`AuditLogStore.kt`、`UsageStatistics.kt` | 会话、分支、配置、备份、审计与用量 |
+| 平台与外部 | `app/src/debianRuntime/`、`:lyra_x11`、Android 权限与前台服务 | PRoot 运行时、图形会话、系统能力与远端服务 |
+
+同一功能通常跨多层：例如「读取工作区文件」由入口层触发、Agent 分派、`AgentFileToolHandler` 与 `NativeFileManager` 执行、`ConversationStore` 记录结果。改动应落在对应层，而不是在 UI 里直接做 IO。
+
 ## 一次任务如何完成
 
 ```text

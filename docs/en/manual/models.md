@@ -1,6 +1,6 @@
 # Models and providers
 
-To synchronize Mengxi API keys/models or use a ChatGPT subscription, see [third-party accounts](/en/manual/accounts). ChatGPT account services are synchronized through sign-in without an API key. Other providers can follow the manual setup below.
+To synchronize keys and models from a New API compatible site, or to use ChatGPT or DeepSeek Harness, see [third-party accounts](/en/manual/accounts). These account services are synchronized through sign-in without an API key. Other providers can follow the manual setup below.
 
 Goal: connect a model and verify the capabilities needed by your task. Prepare the provider's API endpoint, key and exact model ID.
 
@@ -28,7 +28,7 @@ An app capability switch cannot add server-side support. An existing model ID do
 
 ## Advanced settings
 
-Keep defaults until the connection and basic task work. Adjust temperature, output limit, context or reasoning depth one at a time. Custom headers and JSON must match fields accepted by the server. A small output limit can truncate text or tool arguments; a larger context setting does not ensure server acceptance.
+Keep defaults until the connection and basic task work. Adjust temperature, output limit, context or reasoning depth one at a time. Custom headers and JSON must match fields accepted by the server; see [customize model requests](/en/manual/request-customization) for the entry point and validation rules. A small output limit can truncate text or tool arguments; a larger context setting does not ensure server acceptance.
 
 Check pure-prompt mode and Agent tool settings when expecting execution. Web search has its own configuration and backend; a working model connection does not establish search availability.
 

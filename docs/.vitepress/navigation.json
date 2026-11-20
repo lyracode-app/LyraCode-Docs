@@ -6,6 +6,7 @@
       ["quick-start", "完成第一个任务", "Your first task"],
       ["interface", "界面与侧菜单栏", "Interface and sidebar"],
       ["models", "模型与服务商", "Models and providers"],
+      ["request-customization", "自定义模型请求", "Customize model requests"],
       ["accounts", "第三方账号", "Third-party accounts"]
     ]},
     { "id": "chat", "zh": "对话与任务", "en": "Conversations and tasks", "items": [
@@ -22,6 +23,8 @@
       ["files", "侧栏文件与双栏管理", "Sidebar files and dual panes"],
       ["editor", "代码编辑器", "Code editor"],
       ["commands", "PRoot、Termux 与命令", "PRoot, Termux and commands"],
+      ["terminal", "终端：本地与 SSH", "Terminal: local and SSH"],
+      ["linux-gui", "Linux 图形桌面", "Linux GUI desktops"],
       ["local-services", "项目预览与网页访问", "Preview and web access"]
     ]},
     { "id": "services", "zh": "连接与服务", "en": "Connections and services", "items": [

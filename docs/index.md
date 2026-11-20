@@ -46,6 +46,8 @@ features:
 | --- | --- |
 | 用手机修改项目并检查结果 | [工作区与文件编辑](/manual/workspaces) → [项目修复示例](/examples/project-repair) |
 | 在手机上运行 Linux 工具链 | [PRoot、Termux 与命令](/manual/commands) |
+| 直接在手机上敲本地 Linux 或 SSH 命令 | [终端：本地与 SSH](/manual/terminal) |
+| 在手机上运行 Linux 桌面或 GUI 程序 | [Linux 图形桌面](/manual/linux-gui) |
 | 在电脑浏览器中继续手机对话 | [预览项目与网页访问](/manual/local-services) |
 | 编译或修改 Lyra Code 本身 | [源码构建](/developer/build) → [架构](/developer/architecture) |
 | 开发技能、外部工具或桌宠 | [扩展机制](/developer/extensions) → [实战示例](/examples/) |

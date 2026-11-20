@@ -29,13 +29,13 @@ Text chat alone does not establish tool availability. Check model capabilities, 
 
 ## Files and runtimes
 
-[Workspaces](/en/manual/workspaces) · [sidebar files/dual panes](/en/manual/files) · [code editor](/en/manual/editor) · [PRoot/Termux/commands](/en/manual/commands) · [previews/web access](/en/manual/local-services).
+[Workspaces](/en/manual/workspaces) · [sidebar files/dual panes](/en/manual/files) · [code editor](/en/manual/editor) · [PRoot/Termux/commands](/en/manual/commands) · [terminal: local and SSH](/en/manual/terminal) · [Linux GUI desktops](/en/manual/linux-gui) · [previews/web access](/en/manual/local-services).
 
 ## Connections and services
 
 ### Model accounts
 
-[Third-party accounts](/en/manual/accounts) covers login, synchronization, quota and logout. See [models](/en/manual/models) for manual providers.
+[Third-party accounts](/en/manual/accounts) covers New API compatible sign-in, DeepSeek Harness and ChatGPT login, synchronization, quota and logout. See [models](/en/manual/models) for manual providers and [customize model requests](/en/manual/request-customization) for per-model request overrides.
 
 ### Tools and remote services
 

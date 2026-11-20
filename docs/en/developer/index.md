@@ -2,6 +2,10 @@
 
 For application changes, extensions and documentation maintenance. To use the app for your own projects, start with the [manual](/en/manual/).
 
+![Lyra Code layered architecture](./architecture-en.svg)
+
+The diagram layers entry, orchestration, Agent, tools, platform, data and build, with arrows showing call direction. Layer-to-source mapping and one task's actual path are in [Architecture and request flow](/en/developer/architecture).
+
 ## Project and architecture
 
 ### Understand structure
@@ -36,4 +40,4 @@ Short Kotlin paths usually refer to `app/src/main/java/com/yukisoffd/lyracode/`;
 
 API pages identify teaching fragments, host-supplied variables and runnable examples. Complete downloads are in [examples](/en/examples/). Report trigger, behavior, actual validation and remaining limits. UI, permissions and runtimes require suitable device checks.
 
-The application README accepts organization-member PRs; contact administrators to join. Original code uses AGPLv3 and third-party components retain their licenses. Read `LICENSE` and `THIRD_PARTY_NOTICES.md` before redistribution.
+**Contributing:** the application README accepts pull requests from anyone, and frequent contributors may apply to join the organization. AI-assisted contributions are welcome, but contributors must test and review their changes, remain responsible for the result, and describe the test scope in the PR. Original code uses AGPLv3 and third-party components retain their licenses. Read `LICENSE` and `THIRD_PARTY_NOTICES.md` before redistribution.

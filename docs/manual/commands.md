@@ -18,7 +18,7 @@
 1. 打开“设置 > PRoot Linux”，下载内置入口提供的 Debian，或导入兼容的 rootfs。
 2. 导入归档应为 tar、tar.gz 或 tgz，包含 `/bin/sh` 或 `/bin/bash`；ISO 不能直接导入，xz/zstd 需先解压为支持的格式。
 3. rootfs 必须匹配实际运行时：当前源码包含 arm64-v8a 与 x86_64 引擎，不提供跨架构模拟。以界面和架构检查结果为准。
-4. 启用环境，记下 Linux ID，在终端中选中它。每个环境有独立的持久终端会话。
+4. 启用环境，记下 Linux ID，在[终端](/manual/terminal)中选中它。每个环境有独立的持久终端会话。
 5. 运行 `pwd` 和 `uname -m`，再检查项目目录。已选且可直接访问的工作区挂载到 `/workspace`；没有工作区时默认从 `/root` 开始。
 
 在 PRoot 内部项目目录运行：
@@ -29,6 +29,8 @@ printf 'Linux shell is ready\n'
 ```
 
 **成功标志：** 终端正常输出，Agent 调用同一个 Linux ID 也能看到预期项目文件。Debian 可用其包管理器安装开发依赖；导入其他发行版时使用对应包管理器。
+
+需要图形界面时，不经过 SSH 也能运行桌面或单个 GUI 程序：在 PRoot Linux 设置中启用环境后点该行的桌面图标，或让 AI 调用 `linux_gui`。依赖安装、显示后端、悬浮窗与截图见 [Linux 图形环境与桌面](/manual/linux-gui)。
 
 授予“所有文件访问”后，共享存储可挂载到 `/storage`，主存储也可从 `/sdcard` 访问；已有终端需重连才能得到新的挂载。禁用/删除环境会停止该环境保留的进程；卸载或清除应用数据会删除 rootfs。
 

@@ -29,13 +29,13 @@ Lyra Code 是 Android 上的 AI 开发环境。模型接收任务并选择工具
 
 ## 文件与运行环境
 
-[工作区选择](/manual/workspaces) · [侧栏文件与双栏管理](/manual/files) · [代码编辑器](/manual/editor) · [PRoot、Termux 与命令](/manual/commands) · [项目预览与网页访问](/manual/local-services)。
+[工作区选择](/manual/workspaces) · [侧栏文件与双栏管理](/manual/files) · [代码编辑器](/manual/editor) · [PRoot、Termux 与命令](/manual/commands) · [终端：本地与 SSH](/manual/terminal) · [Linux 图形桌面](/manual/linux-gui) · [项目预览与网页访问](/manual/local-services)。
 
 ## 连接与服务
 
 ### 模型账号
 
-[第三方账号](/manual/accounts)说明登录、同步、余额与退出；手动添加服务商见[模型配置](/manual/models)。
+[第三方账号](/manual/accounts)说明 New API 兼容登录、DeepSeek Harness 与 ChatGPT 的登录、同步、余额和退出；手动添加服务商见[模型配置](/manual/models)，按模型覆盖请求字段见[自定义模型请求](/manual/request-customization)。
 
 ### 工具与远程服务
 

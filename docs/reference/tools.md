@@ -38,6 +38,7 @@
 | --- | --- |
 | `proot_command` | 必须 `linux_id`；`command` 或 `command_lines` 提供命令；可选 `workDir`、`timeout_seconds`、`background` |
 | `run_command` | 外部 Termux；命令与可选参数同上，不使用 `linux_id` |
+| `linux_gui` | PRoot 图形会话；`action` 取 `guide`、`list`、`start`、`status`、`show`、`hide`、`stop`、`screenshot`、`request_overlay_permission`；`start` 需 `linux_id`，可选 `app_command`、`preset`、`mode`、`width`、`height`、`fps`、`display_backend` |
 | `ssh_exec` | 已配置 SSH 服务器；先通过 `list_ssh_servers` 获取真实 ID |
 | `execute_shell_command` | 依赖实际 Shizuku Shell 能力 |
 | `execute_root_command` | 依赖已配置且实际可用的 Root 执行能力 |
